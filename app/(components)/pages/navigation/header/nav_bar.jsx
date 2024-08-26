@@ -13,6 +13,7 @@ const navigation = [
 
 export default function NavHeader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <header className="absolute inset-x-0 top-0 z-50 bg-gray-50 bg-opacity-10">
       <nav

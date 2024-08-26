@@ -1,13 +1,12 @@
-import HomeHero from "./(components)/home/home_hero";
-import HomeWhy from "./(components)/home/home_why";
-import Footer from "./(components)/navigation/footer/footer";
-import HomeStats from "./(components)/home/home_stats";
-import HomeTestimonials from "./(components)/home/home_testimonials";
-import HomeCTA from "./(components)/home/home_cta";
-import HomeFAQ from "./(components)/home/home_faq";
-import HomeSegments from "./(components)/home/home_segments";
-import HomeBottomCTA from "./(components)/home/home_bottom_cta";
-import HomeProduct from "./(components)/home/home_product";
+import HomeBottomCTA from "./(components)/pages/home/home_bottom_cta";
+import HomeCTA from "./(components)/pages/home/home_cta";
+import HomeFAQ from "./(components)/pages/home/home_faq";
+import HomeHero from "./(components)/pages/home/home_hero";
+import HomeProduct from "./(components)/pages/home/home_product";
+import HomeSegments from "./(components)/pages/home/home_segments";
+import HomeTestimonials from "./(components)/pages/home/home_testimonials";
+import HomeWhy from "./(components)/pages/home/home_why";
+import Footer from "./(components)/pages/navigation/footer/footer";
 
 export default function Home() {
   return (

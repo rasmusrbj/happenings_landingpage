@@ -42,12 +42,18 @@ export default function HomeWhy() {
               <p className="mt-4 text-md leading-8 text-gray-600">
                 The go-to place, whether you are a student or a leader.
               </p>
-              <div className="mt-4">
+              <div className="mt-4 flex flex-row gap-4">
                 <Link
                   href="/features"
                   className="rounded-3xl bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 transition-colors duration-300 ease-in-out "
                 >
                   Benefits
+                </Link>
+                <Link
+                  href="https://get.happenings.dk"
+                  className="rounded-3xl px-3.5 py-2.5 text-sm font-semibold text-blue-600 hover:bg-blue-600 border border-blue-600 hover:text-white transition-colors duration-300 ease-in-out "
+                >
+                  Get
                 </Link>
               </div>
             </div>
@@ -62,7 +68,7 @@ export default function HomeWhy() {
               <dl className="max-w-xl space-y-8 text-base leading-7 text-gray-400 lg:max-w-none">
                 {features.map((feature) => (
                   <div key={feature.name} className="relative">
-                    <dt className="ml-6 inline-block font-semibold text-gray-900">
+                    <dt className="ml-8 inline-block font-semibold text-gray-900">
                       <feature.icon
                         aria-hidden="true"
                         className="absolute left-1 top-1 h-5 w-5 text-gray-600"
