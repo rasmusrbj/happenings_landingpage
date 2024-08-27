@@ -8,7 +8,7 @@ const navigation = [
   { name: "Product", href: "/#product" },
   { name: "About", href: "/about" },
   { name: "Business", href: "/business" },
-  { name: "Mission", href: "/students#benefits" },
+  { name: "Mission", href: "/mission" },
 ];
 
 export default function NavHeader() {
