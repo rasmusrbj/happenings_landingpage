@@ -4,6 +4,7 @@ const navigation = {
   main: [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
     { name: "Terms", href: "/students" },
     { name: "Privacy", href: "/leaders" },
     { name: "Register", href: "https://get.happenings.dk" },

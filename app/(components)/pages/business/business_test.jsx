@@ -8,7 +8,7 @@ const collections = [
     title: "Apartments and Rooms",
     href: "#",
     imageSrc:
-      "https://media.istockphoto.com/id/1341820907/es/foto/tres-j%C3%B3venes-amigos-despreocupados-dos-mujeres-y-un-hombre-sentados-en-el-apartamento-en-el.jpg?s=2048x2048&w=is&k=20&c=RgAlvNG2g0T9jtnAb99Wk1lKU8VzhP_90ti09sR6Sz0=",
+      "https://media.istockphoto.com/id/915914778/es/foto/mujer-joven-en-movimiento-a-un-nuevo-apartamento-escribiendo-un-mensaje-mientras-sentado-sobre.jpg?s=2048x2048&w=is&k=20&c=O2m_KWkm2wCJph04XPNHHaznXU2uMAA3i7yekADusro=",
     imageAlt: "Woman wearing an off-white cotton t-shirt.",
   },
   {
@@ -16,7 +16,7 @@ const collections = [
     title: "Restaurants, Salons, and Stores",
     href: "#",
     imageSrc:
-      "https://media.istockphoto.com/id/2159416405/es/foto/retrato-mujer-y-caf%C3%A9-como-camarera-en-un-peque%C3%B1o-negocio-con-felicidad-en-un-restaurante-o.jpg?s=2048x2048&w=is&k=20&c=V6jbA9NfLvJsDAFLLIfqFPNfZriWWKtewYSPOYDicok=",
+      "https://media.istockphoto.com/id/816833592/es/foto/j%C3%B3venes-amigos-tener-un-buen-rato-en-la-cafeter%C3%ADa.jpg?s=2048x2048&w=is&k=20&c=lxzeq7MAQiAS3qjMOUTR8ixp1WV6y9EBocaNoalwH8U=",
     imageAlt: "Man wearing a charcoal gray cotton t-shirt.",
   },
   {
@@ -24,7 +24,7 @@ const collections = [
     title: "Apps, Webshops and Agencies",
     href: "#",
     imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/home-page-04-collection-03.jpg",
+      "https://media.istockphoto.com/id/1447845897/es/foto/la-mujer-asi%C3%A1tica-y-el-hombre-vendedor-en-l%C3%ADnea-preparan-la-caja-de-paquetes-y-verifican-los.jpg?s=2048x2048&w=is&k=20&c=g_aDdkD80Gah-01z0FDJQjrQbHyRjf_ed-neBVu2ngY=",
     imageAlt:
       "Person sitting at a wooden desk with paper note organizer, pencil and tablet.",
   },
@@ -70,7 +70,7 @@ export default function BusinessTest() {
           <div className="h-48 w-full bg-white" />
         </div>
         <div className="relative py-60">
-          <HappeningsRegister />
+          <HappeningsRegister business={true} />
           <h1 className="text-4xl font-bold tracking-tight text-white shadow-sm sm:text-5xl md:text-6xl">
             Like a poster, <br />
             unlike any poster.
@@ -80,7 +80,7 @@ export default function BusinessTest() {
           </p>
           <div className="mt-4 sm:mt-6">
             <Link
-              href="#"
+              href={`mailto:alexander@happenings.dk?subject=Application%20Business%20{insert business name here}&body=Hello%20Happenings,%0D%0A%0D%0AI%20am%20interested%20in%20applying%20for%20the%20Business%20{insert business name here}.%0D%0A%0D%0APlease%20provide%20what%20you%20are%20interested%20in%20promoting%20and%20one%20to%20three%20examples%20of%20content%20on%20your%20socials%20today.%0D%0A%0D%0AThank%20you.%0D%0A%0D%0ABest%20regards,%0D%0A{your name here}`}
               className="text-sm inline-block rounded-3xl border border-transparent bg-blue-600 px-3.5 py-2.5 font-medium text-white hover:bg-blue-500"
             >
               Apply
@@ -107,14 +107,14 @@ export default function BusinessTest() {
                   aria-hidden="true"
                   className="absolute inset-0 overflow-hidden rounded-lg"
                 >
-                  <div className="absolute inset-0 overflow-hidden group-hover:opacity-75">
+                  <div className="absolute inset-0 overflow-hidden group-hover:opacity-75 transition-transform ease-in-out">
                     <img
                       alt={collection.imageAlt}
                       src={collection.imageSrc}
                       className="h-full w-full object-cover object-center"
                     />
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-50" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-30" />
                 </div>
                 <div className="absolute inset-0 flex items-end rounded-lg p-6">
                   <div>

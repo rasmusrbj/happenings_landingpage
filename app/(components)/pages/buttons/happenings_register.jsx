@@ -1,5 +1,5 @@
 import Link from "next/link";
-export default function HappeningsRegister() {
+export default function HappeningsRegister({ business }) {
   return (
     <div className="flex lg:flex-1 justify-center">
       <Link
@@ -13,7 +13,13 @@ export default function HappeningsRegister() {
             src="https://happenings.dk/static/logo_color.svg"
             className="h-8 w-auto"
           />
-          <p className="font-bold text-md text-white">Happenings</p>
+          <div className="flex flex-row justify-center items-center gap-2">
+            <p className="font-bold text-md text-white">Happenings</p>
+            {business && <p className="text-xs font-normal text-white">|</p>}
+            {business && (
+              <p className="text-xs font-normal text-white">Business</p>
+            )}
+          </div>
         </div>
       </Link>
     </div>
