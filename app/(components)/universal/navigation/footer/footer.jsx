@@ -83,7 +83,7 @@ export default function Footer() {
   return (
     <footer className="bg-gray-50">
       <div className="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
-        <div className="flex lg:flex-1 justify-center mb-4">
+        <div className="flex lg:flex-1 justify-start md:justify-center lg:justify-center mb-4">
           <HappeningsRegisterDark />
         </div>
         <nav
