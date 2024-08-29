@@ -14,6 +14,9 @@ export const metadata = {
   keywords:
     "news, updates, events, happenings, happenings.nl, happenings.dk, happenings.com",
   image: "./images/home_hero_image.webp",
+  openGraph: {
+    ...openGraphImage,
+  },
 };
 
 export default function Home() {
