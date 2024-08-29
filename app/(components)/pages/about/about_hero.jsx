@@ -1,6 +1,6 @@
 import Link from "next/link";
-import HappeningsRegister from "../buttons/happenings_register";
-import NavHeader from "../navigation/header/nav_bar";
+import NavHeader from "../../universal/navigation/header/nav_bar";
+import HappeningsRegister from "../../universal/buttons/happenings_register";
 
 export default function AboutHero() {
   return (

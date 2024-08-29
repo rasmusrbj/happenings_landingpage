@@ -1,8 +1,8 @@
 "use client";
 
-import HappeningsRegister from "../buttons/happenings_register";
-import NavHeader from "../navigation/header/nav_bar";
 import React, { useState, useEffect } from "react";
+import HappeningsRegister from "../../universal/buttons/happenings_register";
+import NavHeader from "../../universal/navigation/header/nav_bar";
 
 export default function MissionHero() {
   const [isSmallScreen, setIsSmallScreen] = useState(false);

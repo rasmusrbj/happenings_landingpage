@@ -1,4 +1,5 @@
 import Link from "next/link";
+import HappeningsRegisterDark from "../../buttons/happenings_register_dark";
 
 const navigation = {
   main: [
@@ -82,21 +83,8 @@ export default function Footer() {
   return (
     <footer className="bg-gray-50">
       <div className="mx-auto max-w-7xl overflow-hidden px-6 py-20 sm:py-24 lg:px-8">
-        <div className="flex lg:flex-1 justify-center">
-          <Link
-            href="/"
-            className="mb-6 -m-1.5 p-1.5 hover:opacity-60 transition-opacity ease-in-out duration-200"
-          >
-            <span className="sr-only">Happenings</span>
-            <div className="flex flex-row gap-2 items-center">
-              <img
-                alt="Logo"
-                src="https://happenings.dk/static/logo_color.svg"
-                className="h-6 w-auto"
-              />
-              <p className="font-bold text-md text-black">Happenings</p>
-            </div>
-          </Link>
+        <div className="flex lg:flex-1 justify-center mb-4">
+          <HappeningsRegisterDark />
         </div>
         <nav
           aria-label="Footer"

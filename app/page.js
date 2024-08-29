@@ -6,7 +6,15 @@ import HomeProduct from "./(components)/pages/home/home_product";
 import HomeSegments from "./(components)/pages/home/home_segments";
 import HomeTestimonials from "./(components)/pages/home/home_testimonials";
 import HomeWhy from "./(components)/pages/home/home_why";
-import Footer from "./(components)/pages/navigation/footer/footer";
+import Footer from "./(components)/universal/navigation/footer/footer";
+
+export const metadata = {
+  title: "Happenings",
+  description: "The best place to find the latest news and updates",
+  keywords:
+    "news, updates, events, happenings, happenings.nl, happenings.dk, happenings.com",
+  image: "./images/home_hero_image.webp",
+};
 
 export default function Home() {
   return (

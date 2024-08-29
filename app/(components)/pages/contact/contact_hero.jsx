@@ -1,5 +1,5 @@
 import Link from "next/link";
-import NavHeader from "../navigation/header/nav_bar";
+import NavHeader from "../../universal/navigation/header/nav_bar";
 
 export default function ContactHero() {
   return (
