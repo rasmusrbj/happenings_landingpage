@@ -7,6 +7,7 @@ import HomeSegments from "./(components)/pages/home/home_segments";
 import HomeTestimonials from "./(components)/pages/home/home_testimonials";
 import HomeWhy from "./(components)/pages/home/home_why";
 import Footer from "./(components)/universal/navigation/footer/footer";
+import { openGraphImage } from "./shared-metadata";
 
 export const metadata = {
   title: "Happenings",
