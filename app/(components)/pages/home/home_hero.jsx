@@ -1,5 +1,6 @@
 import HappeningsRegister from "../../universal/buttons/happenings_register";
 import NavHeader from "../../universal/navigation/header/nav_bar";
+import { track } from "@vercel/analytics";
 
 import Link from "next/link";
 
@@ -38,12 +39,14 @@ export default function HomeHero() {
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Link
                 href="/students"
+                onClick={track("home_students_button")}
                 className="rounded-3xl text-white px-6 py-3 text-sm font-semibold bg-blue-600 hover:transition-colors hover:bg-blue-500 duration-200 ease-in-out"
               >
                 Students
               </Link>
               <Link
                 href="/leaders"
+                onClick={track("home_leaders_button")}
                 className="rounded-3xl text-sm font-semibold border border-white text-white px-6 py-3 hover:transition-colors hover:bg-gray-50 hover:text-gray-900 duration-200 ease-in-out"
               >
                 Leaders
