@@ -10,6 +10,7 @@ const navigation = {
     { name: "Privacy", href: "/leaders" },
     { name: "Register", href: "https://get.happenings.dk" },
     { name: "Login", href: "https://get.happenings.dk" },
+    { name: "Business", href: "/business" },
     //{ name: "Investors", href: "#" },
     //{ name: "Partners", href: "#" },
     //{ name: "Schools", href: "#" },
