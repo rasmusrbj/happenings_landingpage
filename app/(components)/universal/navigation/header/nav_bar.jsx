@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
+import RegisterNavBlue from "../../buttons/register_nav_blue";
+import LoginaNavWhite from "../../buttons/login_nav_white";
 const navigation = [
   { name: "Product", href: "/#product" },
   { name: "About", href: "/about" },
@@ -56,18 +58,8 @@ export default function NavHeader() {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <div className="flex flex-row gap-2">
-            <Link
-              href="#"
-              className="rounded-3xl bg-blue-600 hover:bg-blue-500 transition-colors duration-300 ease-in-out text-sm font-semibold leading-6 text-white px-3 py-2"
-            >
-              Register
-            </Link>
-            <Link
-              href="#"
-              className="rounded-3xl bg-white hover:bg-gray-100 transition-colors duration-300 ease-in-out text-sm font-semibold leading-6 text-gray-900 px-3 py-2"
-            >
-              Login
-            </Link>
+            <RegisterNavBlue text="Register" href="https://get.happenings.dk" />
+            <LoginaNavWhite text="Login" href="https://get.happenings.dk" />
           </div>
         </div>
       </nav>
