@@ -45,7 +45,9 @@ export default function HomeHero() {
               >
                 <button
                   onClick={() => {
-                    track("home_students_button");
+                    track("navigate_students_button", {
+                      location: "home_hero",
+                    });
                   }}
                 >
                   Students
@@ -57,7 +59,7 @@ export default function HomeHero() {
               >
                 <button
                   onClick={() => {
-                    track("home_leaders_button");
+                    track("navigate_leaders_button", { location: "home_hero" });
                   }}
                 >
                   Leaders
