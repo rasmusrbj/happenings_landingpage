@@ -6,6 +6,8 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import RegisterNavBlue from "../../buttons/register_nav_blue";
 import LoginaNavWhite from "../../buttons/login_nav_white";
+import { track } from "@vercel/analytics";
+
 const navigation = [
   { name: "Product", href: "/#product" },
   { name: "About", href: "/about" },
@@ -58,8 +60,23 @@ export default function NavHeader() {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <div className="flex flex-row gap-2">
-            <RegisterNavBlue text="Register" href="https://get.happenings.dk" />
-            <LoginaNavWhite text="Login" href="https://get.happenings.dk" />
+            <button
+              onClick={() => {
+                track("register_button", { location: "nav_header" });
+              }}
+            >
+              <RegisterNavBlue
+                text="Register"
+                href="https://get.happenings.dk"
+              />
+            </button>
+            <button
+              onClick={() => {
+                track("login_button", { location: "nav_header" });
+              }}
+            >
+              <LoginaNavWhite text="Login" href="https://get.happenings.dk" />
+            </button>
           </div>
         </div>
       </nav>

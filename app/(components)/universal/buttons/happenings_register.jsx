@@ -1,4 +1,5 @@
 import Link from "next/link";
+
 export default function HappeningsRegister({ business }) {
   return (
     <div className="flex lg:flex-1 justify-center">
