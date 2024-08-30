@@ -11,7 +11,7 @@ import { openGraphImage } from "./shared-metadata";
 
 export const metadata = {
   title: "Happenings",
-  description: "The best place to find the latest news and updates",
+  description: "A students life in one place",
   keywords:
     "news, updates, events, happenings, happenings.nl, happenings.dk, happenings.com",
   image: "./images/home_hero_image.webp",

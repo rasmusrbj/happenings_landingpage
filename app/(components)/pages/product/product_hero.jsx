@@ -21,13 +21,14 @@ export default function ProductHero() {
               Benefits for Students to enjoy life
             </p>
             <button
+              className="mt-4"
               onClick={() => {
-                track("clicked_shop_now_button");
+                track("students_register_button", { location: "product_hero" });
               }}
             >
               <Link
                 href="#"
-                className="mt-4 rounded-3xl bg-transparant border border-gray-50 hover:bg-gray-100 px-4 py-2.5 text-sm font-medium text-white hover:text-gray-900 active:text-gray-900 active:bg-whtite transition-colors duration-300 ease-in-out "
+                className="rounded-3xl bg-transparant border border-gray-50 hover:bg-gray-100 px-4 py-2.5 text-sm font-medium text-white hover:text-gray-900 active:text-gray-900 active:bg-whtite transition-colors duration-300 ease-in-out "
               >
                 Register
               </Link>
@@ -47,12 +48,21 @@ export default function ProductHero() {
             <p className="mt-1 text-2xl font-semibold text-white">
               Tools to bring people together for Leaders
             </p>
-            <a
-              href="#"
-              className="mt-4 rounded-3xl bg-white px-4 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-50"
+            <button
+              className="mt-4"
+              onClick={() => {
+                track("leaders_claim_community_button", {
+                  location: "product_hero",
+                });
+              }}
             >
-              Shop now
-            </a>
+              <Link
+                href="mailto:support@happenings.dk"
+                className="mt-4 rounded-3xl bg-gray-100 hover:bg-gray-50 active:bg-white px-4 py-2.5 text-sm font-medium text-gray-900 transition-colors duration-300 ease-in-out"
+              >
+                Claim your community
+              </Link>
+            </button>
           </div>
         </div>
       </div>
