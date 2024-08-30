@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 
@@ -121,12 +122,20 @@ export default function HomeSegments() {
                 ))}
               </ul>
               <p className="mt-2">
-                <Link
-                  href="/features/leaders"
-                  className="text-sm font-medium leading-6 text-blue-500 hover:underline underline-offset-2"
+                <button
+                  onClick={() => {
+                    track("navigate_leaders_button", {
+                      location: "home_segments",
+                    });
+                  }}
                 >
-                  Learn more <span aria-hidden="true">&rarr;</span>
-                </Link>
+                  <Link
+                    href="/leaders"
+                    className="text-sm font-medium leading-6 text-blue-500 hover:underline underline-offset-2"
+                  >
+                    Learn more <span aria-hidden="true">&rarr;</span>
+                  </Link>
+                </button>
               </p>
             </div>
           </div>

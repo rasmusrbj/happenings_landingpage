@@ -1,8 +1,10 @@
+"use client";
 import {
   UserPlusIcon,
   LockClosedIcon,
   StarIcon,
 } from "@heroicons/react/24/outline";
+import { track } from "@vercel/analytics/react";
 
 import Link from "next/link";
 
@@ -43,23 +45,35 @@ export default function HomeWhy() {
                 The go-to place, whether you are a student or a leader.
               </p>
               <div className="mt-4 flex flex-row gap-4">
-                <Link
-                  href="/features"
-                  className="rounded-3xl bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 transition-colors duration-300 ease-in-out "
+                <button
+                  onClick={() => {
+                    track("navigate_benefits_button", { location: "home_why" });
+                  }}
                 >
-                  Benefits
-                </Link>
-                <Link
-                  href="https://get.happenings.dk"
-                  className="rounded-3xl px-3.5 py-2.5 text-sm font-semibold text-blue-600 hover:bg-blue-600 border border-blue-600 hover:text-white transition-colors duration-300 ease-in-out "
+                  <Link
+                    href="/benefits"
+                    className="rounded-3xl bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 transition-colors duration-300 ease-in-out "
+                  >
+                    Benefits
+                  </Link>
+                </button>
+                <button
+                  onClick={() => {
+                    track("navigate_get_button", { location: "home_why" });
+                  }}
                 >
-                  Get
-                </Link>
+                  <Link
+                    href="https://get.happenings.dk"
+                    className="rounded-3xl px-3.5 py-2.5 text-sm font-semibold text-blue-600 hover:bg-blue-600 border border-blue-600 hover:text-white transition-colors duration-300 ease-in-out"
+                  >
+                    Get
+                  </Link>
+                </button>
               </div>
             </div>
             <img
               alt="Product screenshot"
-              src="https://media.istockphoto.com/id/2155004308/es/foto/dos-amigos-de-la-generaci%C3%B3n-z-usando-un-tel%C3%A9fono-inteligente-juntos-toma-de-%C3%A1ngulo-bajo-con.jpg?s=2048x2048&w=is&k=20&c=IGsFORzCPQ8Q-f0vALfMOpSsftb1WqQ4aCz8l1mMNrE="
+              src="/images/benefits.webp"
               width={2432}
               height={1442}
               className="relative -z-20 min-w-full max-w-xl rounded-xl shadow-xl ring-1 ring-white/10 lg:row-span-4 lg:w-[64rem] lg:max-w-none"

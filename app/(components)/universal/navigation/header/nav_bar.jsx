@@ -9,7 +9,7 @@ import LoginaNavWhite from "../../buttons/login_nav_white";
 import { track } from "@vercel/analytics";
 
 const navigation = [
-  { name: "Product", href: "/#product" },
+  { name: "Product", href: "/product" },
   { name: "About", href: "/about" },
   { name: "Business", href: "/business" },
   { name: "Mission", href: "/mission" },
@@ -32,20 +32,28 @@ export default function NavHeader() {
             <span className="sr-only">Happenings</span>
             <div className="flex flex-row gap-2 items-center">
               <p className="font-bold text-sm text-white hover:underline underline-offset-2">
-                Home
+                Happenings
               </p>
             </div>
           </Link>
         </div>
         <div className="flex lg:hidden">
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(true)}
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-400"
-          >
-            <span className="sr-only">Open main menu</span>
-            <Bars3Icon aria-hidden="true" className="h-6 w-6" />
-          </button>
+          <div className="flex flex-row gap-2">
+            <LoginaNavWhite
+              text="Login"
+              href="https://get.happenings.dk"
+              button_name={"login_button"}
+              location={"mobile_nav_header"}
+            />
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(true)}
+              className="rounded-3xl px-3 py-2 text-xs font-semibold text-white hover:bg-gray-100 active:bg-white border border-gray-100 hover:text-gray-900 transition-colors duration-300 ease-in-out"
+            >
+              <span className="sr-only">Open main menu</span>
+              More
+            </button>
+          </div>
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
           {navigation.map((item) => (
@@ -60,23 +68,18 @@ export default function NavHeader() {
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <div className="flex flex-row gap-2">
-            <button
-              onClick={() => {
-                track("register_button", { location: "nav_header" });
-              }}
-            >
-              <RegisterNavBlue
-                text="Register"
-                href="https://get.happenings.dk"
-              />
-            </button>
-            <button
-              onClick={() => {
-                track("login_button", { location: "nav_header" });
-              }}
-            >
-              <LoginaNavWhite text="Login" href="https://get.happenings.dk" />
-            </button>
+            <RegisterNavBlue
+              text="Register"
+              href="https://get.happenings.dk"
+              button_name={"register_button"}
+              location={"nav_bar"}
+            />
+            <LoginaNavWhite
+              text="Login"
+              href="https://get.happenings.dk"
+              button_name={"login_button"}
+              location={"nav_header"}
+            />
           </div>
         </div>
       </nav>
@@ -108,7 +111,7 @@ export default function NavHeader() {
               className="-m-2.5 rounded-md p-2.5 text-gray-400"
             >
               <span className="sr-only">Close menu</span>
-              <XMarkIcon aria-hidden="true" className="h-6 w-6" />
+              <XMarkIcon aria-hidden="true" className="h-6 w-6 text-white" />
             </button>
           </div>
           <div className="mt-6 flow-root">
@@ -124,13 +127,19 @@ export default function NavHeader() {
                   </a>
                 ))}
               </div>
-              <div className="py-6">
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-white hover:bg-gray-800"
-                >
-                  Login
-                </a>
+              <div className="py-6 flex flex-row gap-2">
+                <RegisterNavBlue
+                  text={"Register"}
+                  href={"https://get.happenings.dk"}
+                  button_name={"register_button"}
+                  location={"mobile_nav_menu"}
+                />
+                <LoginaNavWhite
+                  text={"Login"}
+                  href={"https://get.happenings.dk"}
+                  button_name={"login_button"}
+                  location={"mobile_nav_menu"}
+                />
               </div>
             </div>
           </div>

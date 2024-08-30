@@ -35,7 +35,7 @@ export default function HomeHero() {
               Unlock and elevate <br />
               your student life.
             </h1>
-            <p className="mt-6 text-lg leading-8 text-gray-50 shadow-sm">
+            <p className="mt-6 text-lg sm:text-md leading-8 text-gray-50 shadow-sm">
               Connect with people at your school and know what's happening.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
