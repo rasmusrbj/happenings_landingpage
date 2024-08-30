@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import HappeningsRegister from "../../universal/buttons/happenings_register";
 import NavHeader from "../../universal/navigation/header/nav_bar";
+import RegisterNavBlue from "../../universal/buttons/register_nav_blue";
 
 export default function MissionHero() {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -39,39 +40,15 @@ export default function MissionHero() {
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <HappeningsRegister />
             <div className="mx-auto max-w-2xl text-center">
-              <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">
+              <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl mb-8">
                 Sit back, relax, turn the volume on, and feel it.
               </h1>
-              <p className="mt-6 text-lg leading-8 text-gray-50">
-                Watch the film.
-              </p>
-            </div>
-            <div className="mt-16 justify-center items-center sm:mt-24">
-              {isSmallScreen ? (
-                <iframe
-                  className="rounded-2xl shadow-lg small-iframe justify-center items-center"
-                  width="max-w-7xl"
-                  height="320"
-                  src="https://www.youtube.com/embed/2PnoK6IMuUM?si=tGZUCpcJ9PJPEP7Z"
-                  title="YouTube video player"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin"
-                  allowfullscreen
-                ></iframe>
-              ) : (
-                <iframe
-                  className="rounded-2xl shadow-lg justify-center"
-                  width="1200"
-                  height="720"
-                  src="https://www.youtube.com/embed/2PnoK6IMuUM?si=tGZUCpcJ9PJPEP7Z"
-                  title="YouTube video player"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin"
-                  allowfullscreen
-                ></iframe>
-              )}
+              <RegisterNavBlue
+                text="Watch the film"
+                href="https://go.happenings.dk/mission"
+                button_name={"watch_button"}
+                location={"mission_hero"}
+              />
             </div>
           </div>
         </div>
