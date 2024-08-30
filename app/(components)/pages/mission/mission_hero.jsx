@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from "react";
 import HappeningsRegister from "../../universal/buttons/happenings_register";
 import NavHeader from "../../universal/navigation/header/nav_bar";
-import RegisterNavBlue from "../../universal/buttons/register_nav_blue";
+import Link from "next/link";
+import LoginaNavWhite from "../../universal/buttons/login_nav_white";
 
 export default function MissionHero() {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -43,12 +44,23 @@ export default function MissionHero() {
               <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl mb-8">
                 Sit back, relax, turn the volume on, and feel it.
               </h1>
-              <RegisterNavBlue
+              <LoginaNavWhite
                 text="Watch the film"
                 href="https://go.happenings.dk/mission"
                 button_name={"watch_button"}
                 location={"mission_hero"}
               />
+
+              <p className="mt-4 text-xs">
+                or go to YouTube,{" "}
+                <Link
+                  className="text-blue-500 hover:underline underline-offset-2"
+                  href="https://go.happenings.dk/mission"
+                >
+                  {" "}
+                  click here.
+                </Link>
+              </p>
             </div>
           </div>
         </div>
