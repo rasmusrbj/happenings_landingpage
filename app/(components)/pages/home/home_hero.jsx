@@ -13,7 +13,7 @@ export default function HomeHero() {
       <div className="relative isolate overflow-hidden pt-14">
         <img
           alt=""
-          src="/images/home_hero_image.webp"
+          src="/images/home/home_hero_image.webp"
           className="absolute inset-0 -z-10 h-full w-full object-cover opacity-95"
         />
         <div

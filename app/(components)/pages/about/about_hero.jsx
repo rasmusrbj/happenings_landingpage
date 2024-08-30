@@ -14,7 +14,7 @@ export default function AboutHero() {
         <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
           <img
             alt=""
-            src="https://media.istockphoto.com/id/1400764779/es/foto/apuesto-manitas-con-capa-roja-y-m%C3%A1scara-como-un-superh%C3%A9roe-posando-con-taladro-en-una-mano.jpg?s=2048x2048&w=is&k=20&c=WlJWKr9E_p_RvzGia6ggxCa6lg9bFofiUnfJ1WU3RPk="
+            src="/images/about/screwdriver.webp"
             className="h-full w-full object-cover object-center"
           />
         </div>

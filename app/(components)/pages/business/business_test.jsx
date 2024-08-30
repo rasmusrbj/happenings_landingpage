@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import NavHeader from "../../universal/navigation/header/nav_bar";
 import HappeningsRegister from "../../universal/buttons/happenings_register";
+import { track } from "@vercel/analytics";
 
 const collections = [
   {
@@ -42,7 +45,7 @@ export default function BusinessTest() {
           <div className="absolute inset-0 overflow-hidden">
             <img
               alt=""
-              src="https://media.istockphoto.com/id/1398831307/es/vector/paisaje-de-monta%C3%B1a-con-amanecer-puesta-del-sol-terreno-monta%C3%B1oso.jpg?s=2048x2048&w=is&k=20&c=9hihIstZK7mU_2w6kbsc0XTA9cxG9YAOAbFWK68mWOI="
+              src="images/business/mountains.webp"
               className="h-full w-full object-cover object-center"
             />
           </div>
@@ -61,7 +64,7 @@ export default function BusinessTest() {
             <div className="absolute inset-0 overflow-hidden">
               <img
                 alt=""
-                src="https://media.istockphoto.com/id/1398831307/es/vector/paisaje-de-monta%C3%B1a-con-amanecer-puesta-del-sol-terreno-monta%C3%B1oso.jpg?s=2048x2048&w=is&k=20&c=9hihIstZK7mU_2w6kbsc0XTA9cxG9YAOAbFWK68mWOI="
+                src="/images/business/business_hero_image.webp"
                 className="h-full w-full object-cover object-center"
               />
             </div>
@@ -83,7 +86,13 @@ export default function BusinessTest() {
               href={`mailto:alexander@happenings.dk?subject=Application%20Business%20{insert business name here}&body=Hello%20Happenings,%0D%0A%0D%0AI%20am%20interested%20in%20applying%20for%20the%20Business%20{insert business name here}.%0D%0A%0D%0APlease%20provide%20what%20you%20are%20interested%20in%20promoting%20and%20one%20to%20three%20examples%20of%20content%20on%20your%20socials%20today.%0D%0A%0D%0AThank%20you.%0D%0A%0D%0ABest%20regards,%0D%0A{your name here}`}
               className="text-sm inline-block rounded-3xl border border-transparent bg-blue-600 px-3.5 py-2.5 font-medium text-white hover:bg-blue-500"
             >
-              Apply
+              <button
+                onClick={() => {
+                  track("apply_business_button", { location: "business_hero" });
+                }}
+              >
+                Apply
+              </button>
             </Link>
           </div>
         </div>
