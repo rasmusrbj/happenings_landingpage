@@ -5,6 +5,7 @@ import HappeningsRegister from "../../universal/buttons/happenings_register";
 import NavHeader from "../../universal/navigation/header/nav_bar";
 import Link from "next/link";
 import LoginaNavWhite from "../../universal/buttons/login_nav_white";
+import HappeningsRegisterDark from "../../universal/buttons/happenings_register_dark";
 
 export default function MissionHero() {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
@@ -39,28 +40,19 @@ export default function MissionHero() {
         </div>
         <div className="py-24 sm:py-32 lg:pb-40">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
-            <HappeningsRegister />
+            <HappeningsRegisterDark />
             <div className="mx-auto max-w-2xl text-center">
-              <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl mb-8">
-                Sit back, relax, turn the volume on, and feel it.
+              <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl mb-8">
+                Sit back, relax, turn volume on, and feel it.
               </h1>
               <LoginaNavWhite
-                text="Watch the film"
+                text="Watch Film 🍿"
                 href="https://go.happenings.dk/mission"
                 button_name={"watch_button"}
                 location={"mission_hero"}
               />
 
-              <p className="mt-4 text-xs">
-                or go to YouTube,{" "}
-                <Link
-                  className="text-blue-500 hover:underline underline-offset-2"
-                  href="https://go.happenings.dk/mission"
-                >
-                  {" "}
-                  click here.
-                </Link>
-              </p>
+              <p className="mt-4 text-xs">(on YouTube)</p>
             </div>
           </div>
         </div>
