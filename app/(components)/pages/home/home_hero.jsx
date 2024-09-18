@@ -28,15 +28,16 @@ export default function HomeHero() {
             className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-20 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
           />
         </div>
-        <div className="mx-auto max-w-xl py-32 sm:py-48 lg:py-56">
+        <div className="mx-auto max-w-3xl py-32 sm:py-48 lg:py-56">
           <div className="text-center">
             <HappeningsRegister />
             <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl shadow-sm">
-              Unlock and elevate <br />
-              your student life.
+              Like a bulletin board, <br />
+              unlike any bulletin board.
             </h1>
             <p className="mt-6 text-lg sm:text-md leading-8 text-gray-50 shadow-sm">
-              Connect with people at your school and know what's happening.
+              Connect with people at your school <br className="sm:hidden" />
+              and know what's happening.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <Link
