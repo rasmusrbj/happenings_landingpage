@@ -2,10 +2,12 @@ import { ChevronRightIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import NavHeader from "../../universal/navigation/header/nav_bar";
 
-export default function BusinessHero() {
+export default function GovHero() {
   return (
     <div className="relative isolate overflow-hidden bg-gray-50">
-      <NavHeader />
+      <div className="">
+        <NavHeader />
+      </div>
       <div className="mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:flex lg:px-8 lg:py-40">
         <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl lg:flex-shrink-0 lg:pt-8">
           <div className="mt-24 sm:mt-32 lg:mt-16">
@@ -23,11 +25,10 @@ export default function BusinessHero() {
             </a>
           </div>
           <h1 className="mt-10 text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
-            Like a poster, <br />
-            unlike any poster.
+            Make commerce thrive in your city.
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            Sell your products and services directly to students.
+            Help local businesses integrate in the digital economy.
           </p>
           <div className="mt-10 flex items-center gap-x-6">
             <Link
