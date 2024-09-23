@@ -12,7 +12,7 @@ const tiers = [
   {
     name: "Hyperlocal",
     id: "tier-hyperlocal",
-    href: "#",
+    href: "mailto:support@happenings.dk",
     price: { monthly: "Individual", annually: "Individual" },
     description:
       "Visibility for all students in your city in the public list. Approved businesses only.",
