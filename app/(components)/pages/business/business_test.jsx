@@ -17,7 +17,7 @@ const collections = [
   {
     name: "Local Business",
     title: "Restaurants, Salons, and Stores",
-    href: "#",
+    href: "business/local",
     imageSrc:
       "https://media.istockphoto.com/id/816833592/es/foto/j%C3%B3venes-amigos-tener-un-buen-rato-en-la-cafeter%C3%ADa.jpg?s=2048x2048&w=is&k=20&c=lxzeq7MAQiAS3qjMOUTR8ixp1WV6y9EBocaNoalwH8U=",
     imageAlt: "Man wearing a charcoal gray cotton t-shirt.",

@@ -42,7 +42,9 @@ export default function GovUSP() {
         <div className="grid grid-cols-1 items-center gap-x-8 gap-y-16 lg:grid-cols-2">
           <div>
             <div className="border-b border-gray-200 pb-10">
-              <h2 className="font-medium text-gray-500">Machined Kettle</h2>
+              <h2 className="font-medium text-gray-500">
+                Link students and businesses
+              </h2>
               <p className="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                 The students are the future.
               </p>
