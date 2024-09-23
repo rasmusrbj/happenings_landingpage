@@ -26,7 +26,7 @@ export default function IncentivesLocal() {
   return (
     <div className="bg-gray-50">
       <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
-        <div className="rounded-2xl bg-gray-50 px-6 py-16 sm:p-16">
+        <div className="rounded-2xl bg-gray-50 px-6">
           <div className="mx-auto max-w-xl lg:max-w-none">
             <div className="text-center">
               <h2 className="text-2xl font-bold tracking-tight text-gray-900">

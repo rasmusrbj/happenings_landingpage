@@ -1,3 +1,4 @@
+import BenefitsLocal from "@/app/(components)/pages/business/local/benefits";
 import HeroLocal from "@/app/(components)/pages/business/local/hero";
 import IncentivesLocal from "@/app/(components)/pages/business/local/incentives";
 import LocalPricing from "@/app/(components)/pages/business/local/pricing";
@@ -9,6 +10,7 @@ export default function Business() {
       <HeroLocal />
       <IncentivesLocal />
       <LocalPricing />
+      <BenefitsLocal />
       <Footer />
     </main>
   );
