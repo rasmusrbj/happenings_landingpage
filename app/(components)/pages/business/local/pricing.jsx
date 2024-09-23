@@ -12,7 +12,10 @@ const tiers = [
   {
     name: "Hyperlocal",
     id: "tier-hyperlocal",
-    href: "mailto:support@happenings.dk",
+    href: {
+      monthly: "mailto:support@happenings.dk",
+      annually: "mailto:support@happenings.dk",
+    },
     price: { monthly: "Individual", annually: "Individual" },
     description:
       "Visibility for all students in your city in the public list. Approved businesses only.",
@@ -28,7 +31,10 @@ const tiers = [
   {
     name: "Local+",
     id: "tier-local-plus",
-    href: "#",
+    href: {
+      monthly: "https://buy.stripe.com/14k28J5BF7fC6mAfZ9",
+      annually: "https://buy.stripe.com/4gwfZzd47czW26k6oy",
+    },
     price: { monthly: "235 kr.", annually: "1.974 kr." },
     description:
       "Set different discounts at different times and enjoy a top spot on the list once a month.",
@@ -45,7 +51,10 @@ const tiers = [
   {
     name: "All the way",
     id: "tier-all-the-way",
-    href: "#",
+    href: {
+      monthly: "https://buy.stripe.com/4gwfZzd47czW26k6oy",
+      annually: "https://buy.stripe.com/4gwfZzd47czW26k6oy",
+    },
     price: { monthly: "789 kr.", annually: "7.575 kr." },
     description:
       "Maximum visibility and flexibility with multiple offers, special discounts, and sticky top ad.",
@@ -69,7 +78,7 @@ export default function LocalPricing() {
   const [frequency, setFrequency] = useState(frequencies[0]);
 
   return (
-    <div className="bg-gray-900 py-24 sm:py-32">
+    <div id="#pricing" className="bg-gray-900 py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-4xl text-center">
           <p className="mt-2 text-4xl font-bold tracking-tight text-white sm:text-5xl">
@@ -77,8 +86,8 @@ export default function LocalPricing() {
           </p>
         </div>
         <p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-300">
-          Choose an affordable plan that’s packed with the best features for
-          engaging your audience, creating customer loyalty, and driving sales.
+          Affordable plans that’s packed with the best features for engaging
+          your audience, creating customer loyalty, and driving sales.
         </p>
         <div className="mt-16 flex justify-center">
           <fieldset aria-label="Payment frequency">
@@ -135,7 +144,7 @@ export default function LocalPricing() {
                 </span>
               </p>
               <a
-                href={tier.href}
+                href={tier.href[frequency.value]}
                 aria-describedby={tier.id}
                 className={classNames(
                   tier.mostPopular
