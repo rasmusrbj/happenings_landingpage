@@ -91,7 +91,7 @@ export default function LocalPricing() {
                 <Radio
                   key={option.value}
                   value={option}
-                  className="cursor-pointer rounded-full px-2.5 py-1 data-[checked]:bg-indigo-500"
+                  className="cursor-pointer rounded-full px-2.5 py-1 data-[checked]:bg-blue-500"
                 >
                   {option.label}
                 </Radio>
@@ -105,7 +105,7 @@ export default function LocalPricing() {
               key={tier.id}
               className={classNames(
                 tier.mostPopular
-                  ? "bg-white/5 ring-2 ring-indigo-500"
+                  ? "bg-white/5 ring-2 ring-blue-500"
                   : "ring-1 ring-white/10",
                 "rounded-3xl p-8 xl:p-10"
               )}
@@ -118,7 +118,7 @@ export default function LocalPricing() {
                   {tier.name}
                 </h3>
                 {tier.mostPopular ? (
-                  <p className="rounded-full bg-indigo-500 px-2.5 py-1 text-xs font-semibold leading-5 text-white">
+                  <p className="rounded-full bg-emerald-600 px-2.5 py-1 text-xs font-semibold leading-5 text-white">
                     Most popular
                   </p>
                 ) : null}
@@ -139,12 +139,12 @@ export default function LocalPricing() {
                 aria-describedby={tier.id}
                 className={classNames(
                   tier.mostPopular
-                    ? "bg-indigo-500 text-white shadow-sm hover:bg-indigo-400 focus-visible:outline-indigo-500"
-                    : "bg-white/10 text-white hover:bg-white/20 focus-visible:outline-white",
-                  "mt-6 block rounded-md px-3 py-2 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                    ? "bg-emerald-600 text-white shadow-sm hover:bg-emerald-500 focus-visible:outline-emerald-500"
+                    : "bg-blue-600 text-white shadow-sm hover:bg-blue-500 focus-visible:outline-blue-500",
+                  "mt-6 block rounded-3xl px-3 py-2 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                 )}
               >
-                {tier.name === "Hyperlocal" ? "Contact us" : "Buy plan"}
+                {tier.name === "Hyperlocal" ? "Request" : "Enroll"}
               </a>
               <ul
                 role="list"
