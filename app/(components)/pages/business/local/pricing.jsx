@@ -13,13 +13,15 @@ const tiers = [
     name: "Hyperlocal",
     id: "tier-hyperlocal",
     href: "#",
-    price: { monthly: "Individual ", annually: "Individual " },
-    description: "The essentials to provide your best work for clients.",
+    price: { monthly: "Individual", annually: "Individual" },
+    description:
+      "Visibility for all students in your city in the public list. Approved businesses only.",
     features: [
-      "5 products",
-      "Up to 1,000 subscribers",
-      "Basic analytics",
-      "48-hour support response time",
+      "Visibility on the public list",
+      "Listed in the specific category",
+      "One fixed discount on all opening hours",
+      "Admin panel with analytics",
+      "Ideal for individual stores (e.g., barber, coffee shop, ice cream parlor, etc.)",
     ],
     mostPopular: false,
   },
@@ -28,13 +30,15 @@ const tiers = [
     id: "tier-local-plus",
     href: "#",
     price: { monthly: "235 kr.", annually: "1.974 kr." },
-    description: "A plan that scales with your rapidly growing business.",
+    description:
+      "Set different discounts at different times and enjoy a top spot on the list once a month.",
     features: [
-      "25 products",
-      "Up to 10,000 subscribers",
-      "Advanced analytics",
-      "24-hour support response time",
-      "Marketing automations",
+      "Everything in Hyperlocal",
+      "Inreased visibility on the public list",
+      "Showcase products, services or menu",
+      "Set different discounts at different hours",
+      "Top spot in the niche for 1 week /month",
+      "Perfect for chains and franchises",
     ],
     mostPopular: true,
   },
@@ -43,14 +47,15 @@ const tiers = [
     id: "tier-all-the-way",
     href: "#",
     price: { monthly: "789 kr.", annually: "7.575 kr." },
-    description: "Dedicated support and infrastructure for your company.",
+    description:
+      "Maximum visibility and flexibility with multiple offers, special discounts, and sticky top ad.",
     features: [
-      "Unlimited products",
-      "Unlimited subscribers",
-      "Advanced analytics",
-      "1-hour, dedicated support response time",
-      "Marketing automations",
-      "Custom reporting tools",
+      "Everything in Local+",
+      "Multiple offers (e.g., 2-for-1, special discounts on specific days)",
+      "Always listed as the top choice",
+      "Ad always placed on the top in public list",
+      "Dedicated account manager",
+      "Feature as 'deal of the month' once a year (month of your choice)",
     ],
     mostPopular: false,
   },
@@ -67,11 +72,8 @@ export default function LocalPricing() {
     <div className="bg-gray-900 py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-4xl text-center">
-          <h2 className="text-base font-semibold leading-7 text-indigo-400">
-            Pricing
-          </h2>
           <p className="mt-2 text-4xl font-bold tracking-tight text-white sm:text-5xl">
-            Pricing plans for teams of&nbsp;all&nbsp;sizes
+            Fair pricing for every local business
           </p>
         </div>
         <p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-300">
