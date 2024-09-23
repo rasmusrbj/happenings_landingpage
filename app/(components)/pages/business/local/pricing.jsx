@@ -76,16 +76,17 @@ function classNames(...classes) {
 
 export default function LocalPricing() {
   const [frequency, setFrequency] = useState(frequencies[0]);
+  const [isChecked, setIsChecked] = useState(false);
 
   return (
-    <div id="#pricing" className="bg-gray-900 py-24 sm:py-32">
+    <div id="#pricing" className="bg-gray-50 py-24 sm:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-4xl text-center">
-          <p className="mt-2 text-4xl font-bold tracking-tight text-white sm:text-5xl">
+          <p className="mt-2 text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
             Fair pricing for every local business
           </p>
         </div>
-        <p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-300">
+        <p className="mx-auto mt-6 max-w-2xl text-center text-lg leading-8 text-gray-700">
           Affordable plans that’s packed with the best features for engaging
           your audience, creating customer loyalty, and driving sales.
         </p>
@@ -94,13 +95,13 @@ export default function LocalPricing() {
             <RadioGroup
               value={frequency}
               onChange={setFrequency}
-              className="grid grid-cols-2 gap-x-1 rounded-full bg-white/5 p-1 text-center text-xs font-semibold leading-5 text-white"
+              className="grid grid-cols-2 gap-x-1 rounded-full bg-gray-100 p-1 text-center text-xs font-semibold leading-5 text-gray-900 shadow-md"
             >
               {frequencies.map((option) => (
                 <Radio
                   key={option.value}
                   value={option}
-                  className="cursor-pointer rounded-full px-2.5 py-1 data-[checked]:bg-blue-500"
+                  className="cursor-pointer rounded-full px-2.5 py-1 data-[checked]:bg-blue-500 data-[checked]:text-white"
                 >
                   {option.label}
                 </Radio>
@@ -114,15 +115,15 @@ export default function LocalPricing() {
               key={tier.id}
               className={classNames(
                 tier.mostPopular
-                  ? "bg-white/5 ring-2 ring-blue-500"
-                  : "ring-1 ring-white/10",
+                  ? "bg-white/5 ring-2 ring-emerald-600"
+                  : "ring-1 ring-blue-500",
                 "rounded-3xl p-8 xl:p-10"
               )}
             >
               <div className="flex items-center justify-between gap-x-4">
                 <h3
                   id={tier.id}
-                  className="text-lg font-semibold leading-8 text-white"
+                  className="text-lg font-semibold leading-8 text-gray-900"
                 >
                   {tier.name}
                 </h3>
@@ -132,14 +133,14 @@ export default function LocalPricing() {
                   </p>
                 ) : null}
               </div>
-              <p className="mt-4 text-sm leading-6 text-gray-300">
+              <p className="mt-4 text-sm leading-6 text-gray-700">
                 {tier.description}
               </p>
               <p className="mt-6 flex items-baseline gap-x-1">
-                <span className="text-4xl font-bold tracking-tight text-white">
+                <span className="text-4xl font-bold tracking-tight text-gray-900">
                   {tier.price[frequency.value]}
                 </span>
-                <span className="text-sm font-semibold leading-6 text-gray-300">
+                <span className="text-sm font-semibold leading-6 text-gray-500">
                   {frequency.priceSuffix}
                 </span>
               </p>
@@ -157,13 +158,13 @@ export default function LocalPricing() {
               </a>
               <ul
                 role="list"
-                className="mt-8 space-y-3 text-sm leading-6 text-gray-300 xl:mt-10"
+                className="mt-8 space-y-3 text-sm leading-6 text-gray-700 xl:mt-10"
               >
                 {tier.features.map((feature) => (
                   <li key={feature} className="flex gap-x-3">
                     <CheckIcon
                       aria-hidden="true"
-                      className="h-6 w-5 flex-none text-white"
+                      className="h-6 w-5 flex-none text-gray-900"
                     />
                     {feature}
                   </li>
