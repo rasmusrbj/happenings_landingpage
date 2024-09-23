@@ -52,8 +52,8 @@ const tiers = [
     name: "All the way",
     id: "tier-all-the-way",
     href: {
-      monthly: "https://buy.stripe.com/4gwfZzd47czW26k6oy",
-      annually: "https://buy.stripe.com/4gwfZzd47czW26k6oy",
+      monthly: "https://buy.stripe.com/6oE6oZ5BF0RebGU6oA",
+      annually: "https://buy.stripe.com/7sI7t32pt0Reh1ebIV",
     },
     price: { monthly: "789 kr.", annually: "7.575 kr." },
     description:
