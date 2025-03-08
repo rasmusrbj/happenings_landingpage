@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { format } from "date-fns";
-import { Calendar, MapPin, Users, Share2, CalendarPlus, Loader2, ExternalLink } from "lucide-react";
+import { Calendar, MapPin, Users, Share2, CalendarPlus, Loader2, AlertCircle } from "lucide-react";
 import {
     Card,
     CardContent,
@@ -12,7 +12,6 @@ import {
     CardTitle
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import {
     Dialog,
@@ -34,20 +33,30 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Progress } from "@/components/ui/progress";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
-const EventLandingPage = ({ eventId = "GnZyd" }) => {
+const EventLandingPage = ({ eventId }) => {
     const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
     const [isCalendarDialogOpen, setIsCalendarDialogOpen] = useState(false);
     const [eventData, setEventData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [copySuccess, setCopySuccess] = useState(false);
 
     useEffect(() => {
         const fetchEventData = async () => {
+            if (!eventId) {
+                setError("No event ID provided");
+                setLoading(false);
+                return;
+            }
+
             try {
                 setLoading(true);
-                // Using the specified API endpoint
-                const response = await fetch(`https://share.happenings.dk/event/${eventId}`);
+                console.log(`Fetching event data for ID: ${eventId}`);
+
+                // Using API route to avoid CORS issues
+                const response = await fetch(`/api/event?id=${eventId}`);
 
                 if (!response.ok) {
                     throw new Error(`Failed to fetch event data: ${response.status}`);
@@ -65,6 +74,16 @@ const EventLandingPage = ({ eventId = "GnZyd" }) => {
 
         fetchEventData();
     }, [eventId]);
+
+    // Reset copy success message after 2 seconds
+    useEffect(() => {
+        if (copySuccess) {
+            const timer = setTimeout(() => {
+                setCopySuccess(false);
+            }, 2000);
+            return () => clearTimeout(timer);
+        }
+    }, [copySuccess]);
 
     if (loading) {
         return (
@@ -89,66 +108,44 @@ const EventLandingPage = ({ eventId = "GnZyd" }) => {
         );
     }
 
-    // Extract key information from the API response
-    const {
-        title,
-        description,
-        start_date,
-        end_date,
-        address,
-        max_participants,
-        participant_count,
-        is_open,
-        host,
-        image,
-    } = eventData.Event;
+    // Extract event data
+    const event = eventData.Event;
 
-    const startDateObj = new Date(start_date.seconds * 1000);
-    const endDateObj = new Date(end_date.seconds * 1000);
-
+    // Format dates
+    const startDateObj = new Date(event.start_date.seconds * 1000);
+    const endDateObj = new Date(event.end_date.seconds * 1000);
     const formattedStartDate = format(startDateObj, "dd MMM yyyy");
     const formattedStartTime = format(startDateObj, "HH:mm");
     const formattedEndTime = format(endDateObj, "HH:mm");
 
-    // Find English description content
-    const englishDescParts = description.split("DRAW PARTY");
-    const englishDescription = englishDescParts.length > 1
-        ? "DRAW PARTY" + englishDescParts[1]
-        : description;
-
-    // Extract title in English
-    const titleInEnglish = title.includes("Udtrækningsfest")
-        ? "Draw Party for Kapsejladsen 2025"
-        : title;
-
-    // For extracting price info
-    const priceMatch = description.match(/Price: ([\d]+) DKK/);
-    const price = priceMatch ? priceMatch[1] : "40"; // Default to 40 DKK as mentioned in the description
-
-    // Extract location for Google Maps
-    const fullAddress = `${address.street}, ${address.postal_code} ${address.city}`;
+    // Location data
+    const fullAddress = `${event.address.street}, ${event.address.postal_code} ${event.address.city}`;
     const encodedAddress = encodeURIComponent(fullAddress);
     const mapUrl = `https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=${encodedAddress}`;
 
-    // Extract drink prices from description
-    const priceSection = description.split("Prices:")[1]?.split("FOOD")[0] || "";
+    // Ticket information
+    const ticketPercentage = Math.min(Math.round((event.participant_count / event.max_participants) * 100), 100);
+    const ticketsRemaining = event.max_participants - event.participant_count;
 
-    // Calculate percentage of tickets sold
-    const ticketPercentage = Math.min(Math.round((participant_count / max_participants) * 100), 100);
-
-    // Generate calendar event data
+    // Calendar information
     const calendarEvent = {
-        title: titleInEnglish,
+        title: event.title,
         start: startDateObj.toISOString(),
         end: endDateObj.toISOString(),
         location: fullAddress,
-        description: englishDescription.split('\n').slice(0, 5).join('\n') + '...'
+        description: event.description.substring(0, 500) + '...'
     };
 
-    // Format Google Calendar link
+    // Calendar links
     const googleCalendarLink = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(calendarEvent.title)}&dates=${calendarEvent.start.replace(/[-:]/g, '').replace('.000', '')}\/${calendarEvent.end.replace(/[-:]/g, '').replace('.000', '')}&details=${encodeURIComponent(calendarEvent.description)}&location=${encodedAddress}&sprop=&sprop=name:`;
 
-    // Format Apple Calendar link (ics file)
+    // Handle link copying
+    const handleCopyLink = () => {
+        navigator.clipboard.writeText(window.location.href);
+        setCopySuccess(true);
+    };
+
+    // Create ICS content for calendar downloads
     const createICSContent = () => {
         const icsContent = [
             'BEGIN:VCALENDAR',
@@ -172,7 +169,7 @@ const EventLandingPage = ({ eventId = "GnZyd" }) => {
             {/* Header with event title and action buttons */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
                 <div>
-                    <h1 className="text-3xl md:text-4xl font-bold">{titleInEnglish}</h1>
+                    <h1 className="text-3xl md:text-4xl font-bold">{event.title}</h1>
                     <p className="text-muted-foreground flex items-center mt-2">
                         <Calendar className="h-4 w-4 mr-2" />
                         {formattedStartDate} · {formattedStartTime} - {formattedEndTime}
@@ -196,10 +193,10 @@ const EventLandingPage = ({ eventId = "GnZyd" }) => {
 
             {/* Event image */}
             <div className="relative w-full h-64 md:h-96 rounded-lg overflow-hidden mb-8 shadow-md">
-                {image && image.large ? (
+                {event.image && event.image.large ? (
                     <Image
-                        src={image.large}
-                        alt={titleInEnglish}
+                        src={event.image.large}
+                        alt={event.title}
                         fill
                         className="object-cover"
                         sizes="(max-width: 768px) 100vw, 1200px"
@@ -207,26 +204,26 @@ const EventLandingPage = ({ eventId = "GnZyd" }) => {
                     />
                 ) : (
                     <div className="w-full h-full bg-gradient-to-r from-purple-500 via-pink-500 to-red-200 flex items-center justify-center">
-                        <span className="text-white text-xl font-bold">{titleInEnglish}</span>
+                        <span className="text-white text-xl font-bold">{event.title}</span>
                     </div>
                 )}
             </div>
 
             {/* Registration status banner */}
             <div className={`mb-8 p-4 rounded-lg flex items-center justify-between ${
-                is_open ? "bg-green-50 border border-green-200" : "bg-red-50 border border-red-200"
+                event.is_open ? "bg-green-50 border border-green-200" : "bg-red-50 border border-red-200"
             }`}>
                 <div className="flex items-center">
                     <div className={`w-3 h-3 rounded-full mr-3 ${
-                        is_open ? "bg-green-500" : "bg-red-500"
+                        event.is_open ? "bg-green-500" : "bg-red-500"
                     }`}></div>
                     <span className="font-medium">
-            {is_open ? "Registration is open" : "Registration is closed"}
-          </span>
+                        {event.is_open ? "Registration is open" : "Registration is closed"}
+                    </span>
                 </div>
                 <div className="flex items-center">
                     <Users className="h-4 w-4 mr-2" />
-                    <span>{participant_count} / {max_participants} participants</span>
+                    <span>{event.participant_count} / {event.max_participants} participants</span>
                 </div>
             </div>
 
@@ -242,33 +239,11 @@ const EventLandingPage = ({ eventId = "GnZyd" }) => {
                         <CardContent>
                             <div className="prose max-w-none">
                                 <div className="whitespace-pre-line">
-                                    {englishDescription}
+                                    {event.description}
                                 </div>
                             </div>
                         </CardContent>
                     </Card>
-
-                    {/* Drink Prices Section */}
-                    {priceSection && (
-                        <Card className="mb-6">
-                            <CardHeader>
-                                <CardTitle className="text-xl">Drink Prices</CardTitle>
-                            </CardHeader>
-
-                            <CardContent>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    {priceSection.split('\n')
-                                        .filter(line => line.trim() !== '')
-                                        .map((line, index) => (
-                                            <div key={index} className="flex justify-between items-center py-2 border-b">
-                                                <span>{line.split(':')[0]}</span>
-                                                <span className="font-medium">{line.split(':')[1]}</span>
-                                            </div>
-                                        ))}
-                                </div>
-                            </CardContent>
-                        </Card>
-                    )}
 
                     {/* Location Map */}
                     <Card className="mb-6">
@@ -311,39 +286,34 @@ const EventLandingPage = ({ eventId = "GnZyd" }) => {
                         <CardContent>
                             <Accordion type="single" collapsible className="w-full">
                                 <AccordionItem value="item-1">
-                                    <AccordionTrigger>What is Kapsejladsen?</AccordionTrigger>
+                                    <AccordionTrigger>What is this event about?</AccordionTrigger>
                                     <AccordionContent>
-                                        Kapsejladsen is a traditional annual boat race event at Aarhus University where different student organizations compete against each other. It involves beer chugging and crossing the University Park lake in boats.
+                                        This event is {event.title}. Please read the description above for more details.
                                     </AccordionContent>
                                 </AccordionItem>
 
                                 <AccordionItem value="item-2">
-                                    <AccordionTrigger>What happens at the Draw Party?</AccordionTrigger>
-                                    <AccordionContent>
-                                        The Draw Party determines which teams will compete against each other in the upcoming Kapsejladsen. Representatives from each participating organization compete in a beer chugging contest to determine their choice of lane in the respective heats.
-                                    </AccordionContent>
-                                </AccordionItem>
-
-                                <AccordionItem value="item-3">
                                     <AccordionTrigger>Is there an age limit for the event?</AccordionTrigger>
                                     <AccordionContent>
                                         Yes, you must be at least 18 years old to attend this event as alcohol will be served.
                                     </AccordionContent>
                                 </AccordionItem>
 
-                                <AccordionItem value="item-4">
-                                    <AccordionTrigger>Will there be food available?</AccordionTrigger>
-                                    <AccordionContent>
-                                        Yes, Brødrenes will serve food in Gårdhaven from 18:00 to 02:00.
-                                    </AccordionContent>
-                                </AccordionItem>
-
-                                <AccordionItem value="item-5">
+                                <AccordionItem value="item-3">
                                     <AccordionTrigger>Can I get a refund for my ticket?</AccordionTrigger>
                                     <AccordionContent>
                                         Please contact the organizer directly for their refund policy. Usually, tickets are non-refundable but may be transferable.
                                     </AccordionContent>
                                 </AccordionItem>
+
+                                {event.is_open && (
+                                    <AccordionItem value="item-4">
+                                        <AccordionTrigger>How can I buy tickets?</AccordionTrigger>
+                                        <AccordionContent>
+                                            You can buy tickets directly from this page by clicking the "Buy Ticket" button. Payment can be made through the secure checkout process.
+                                        </AccordionContent>
+                                    </AccordionItem>
+                                )}
                             </Accordion>
                         </CardContent>
                     </Card>
@@ -372,8 +342,8 @@ const EventLandingPage = ({ eventId = "GnZyd" }) => {
                                 <MapPin className="h-5 w-5 text-muted-foreground mt-0.5" />
                                 <div>
                                     <p className="font-medium">Address</p>
-                                    <p className="text-sm text-muted-foreground">{address.street}</p>
-                                    <p className="text-sm text-muted-foreground">{address.postal_code} {address.city}</p>
+                                    <p className="text-sm text-muted-foreground">{event.address.street}</p>
+                                    <p className="text-sm text-muted-foreground">{event.address.postal_code} {event.address.city}</p>
                                 </div>
                             </div>
 
@@ -384,11 +354,11 @@ const EventLandingPage = ({ eventId = "GnZyd" }) => {
                                         <Users className="h-5 w-5 text-muted-foreground mr-2" />
                                         <p className="font-medium">Participants</p>
                                     </div>
-                                    <p className="text-sm font-medium">{participant_count} / {max_participants}</p>
+                                    <p className="text-sm font-medium">{event.participant_count} / {event.max_participants}</p>
                                 </div>
                                 <Progress value={ticketPercentage} className="h-2" />
                                 <p className="text-xs text-muted-foreground text-right">
-                                    {max_participants - participant_count} tickets remaining
+                                    {ticketsRemaining} tickets remaining
                                 </p>
                             </div>
 
@@ -398,10 +368,10 @@ const EventLandingPage = ({ eventId = "GnZyd" }) => {
                             <div className="pt-2">
                                 <p className="font-medium">Organizer</p>
                                 <div className="flex items-center mt-2">
-                                    {host.image && host.image.small ? (
+                                    {event.host.image && event.host.image.small ? (
                                         <Image
-                                            src={host.image.small}
-                                            alt={host.name}
+                                            src={event.host.image.small}
+                                            alt={event.host.name}
                                             width={40}
                                             height={40}
                                             className="rounded-full mr-3"
@@ -409,17 +379,11 @@ const EventLandingPage = ({ eventId = "GnZyd" }) => {
                                     ) : (
                                         <div className="w-10 h-10 rounded-full bg-gray-200 mr-3" />
                                     )}
-                                    <span>{host.name}</span>
+                                    <span>{event.host.name}</span>
                                 </div>
                             </div>
 
                             <Separator />
-
-                            {/* Price */}
-                            <div className="pt-2">
-                                <p className="font-medium text-lg">Price: {price} DKK</p>
-                                <p className="text-sm text-muted-foreground">This includes wardrobe!</p>
-                            </div>
 
                             {/* Action Buttons */}
                             <div className="pt-4 space-y-3">
@@ -480,6 +444,14 @@ const EventLandingPage = ({ eventId = "GnZyd" }) => {
                         </DialogDescription>
                     </DialogHeader>
                     <div className="flex flex-col gap-2 py-4">
+                        {copySuccess && (
+                            <Alert className="mb-2 bg-green-50 text-green-800 border-green-200">
+                                <AlertCircle className="h-4 w-4" />
+                                <AlertTitle>Success</AlertTitle>
+                                <AlertDescription>Link copied to clipboard!</AlertDescription>
+                            </Alert>
+                        )}
+
                         <Button variant="outline" className="justify-start" onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank')}>
                             <svg className="w-5 h-5 mr-2" fill="#1877F2" viewBox="0 0 24 24">
                                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
@@ -487,7 +459,7 @@ const EventLandingPage = ({ eventId = "GnZyd" }) => {
                             Share on Facebook
                         </Button>
 
-                        <Button variant="outline" className="justify-start" onClick={() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Join me at ${titleInEnglish}`)}&url=${encodeURIComponent(window.location.href)}`, '_blank')}>
+                        <Button variant="outline" className="justify-start" onClick={() => window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(`Join me at ${event.title}`)}&url=${encodeURIComponent(window.location.href)}`, '_blank')}>
                             <svg className="w-5 h-5 mr-2" fill="#1DA1F2" viewBox="0 0 24 24">
                                 <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
                             </svg>
@@ -501,10 +473,7 @@ const EventLandingPage = ({ eventId = "GnZyd" }) => {
                             Share on LinkedIn
                         </Button>
 
-                        <Button variant="outline" className="justify-start" onClick={() => {
-                            navigator.clipboard.writeText(window.location.href);
-                            // You would typically show a toast notification here
-                        }}>
+                        <Button variant="outline" className="justify-start" onClick={handleCopyLink}>
                             <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
                             </svg>
@@ -534,7 +503,7 @@ const EventLandingPage = ({ eventId = "GnZyd" }) => {
                         <Button variant="outline" className="justify-start" onClick={() => {
                             const link = document.createElement('a');
                             link.href = createICSContent();
-                            link.download = `${titleInEnglish.replace(/\s+/g, '-')}.ics`;
+                            link.download = `${event.title.replace(/\s+/g, '-')}.ics`;
                             document.body.appendChild(link);
                             link.click();
                             document.body.removeChild(link);
@@ -549,7 +518,7 @@ const EventLandingPage = ({ eventId = "GnZyd" }) => {
                         <Button variant="outline" className="justify-start" onClick={() => {
                             const link = document.createElement('a');
                             link.href = createICSContent();
-                            link.download = `${titleInEnglish.replace(/\s+/g, '-')}.ics`;
+                            link.download = `${event.title.replace(/\s+/g, '-')}.ics`;
                             document.body.appendChild(link);
                             link.click();
                             document.body.removeChild(link);
