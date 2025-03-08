@@ -34,6 +34,7 @@ import {
 } from "@/components/ui/accordion";
 import { Progress } from "@/components/ui/progress";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import Link from "next/link";
 
 const EventLandingPage = ({ eventId }) => {
     const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
@@ -121,7 +122,7 @@ const EventLandingPage = ({ eventId }) => {
     // Location data
     const fullAddress = `${event.address.street}, ${event.address.postal_code} ${event.address.city}`;
     const encodedAddress = encodeURIComponent(fullAddress);
-    const mapUrl = `https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=${encodedAddress}`;
+    const mapUrl = `https://www.google.com/maps/embed/v1/place?key=AIzaSyAnEwrMkNOFDCZqxWDOKDeez6_zdxPbvRg&q=${encodedAddress}`;
 
     // Ticket information
     const ticketPercentage = Math.min(Math.round((event.participant_count / event.max_participants) * 100), 100);
@@ -177,9 +178,11 @@ const EventLandingPage = ({ eventId }) => {
                 </div>
 
                 <div className="flex gap-2 w-full md:w-auto">
-                    <Button className="flex-1 md:flex-none" variant="default" size="lg">
-                        Buy Ticket
-                    </Button>
+                    <Link href={`https://app.happenings.dk/buy/${event.id}`}>
+                        <Button className="flex-1 md:flex-none" variant="default" size="lg">
+                            Buy Ticket
+                        </Button>
+                    </Link>
                     <Button
                         className="flex-1 md:flex-none"
                         variant="outline"
@@ -387,9 +390,11 @@ const EventLandingPage = ({ eventId }) => {
 
                             {/* Action Buttons */}
                             <div className="pt-4 space-y-3">
-                                <Button className="w-full h-11 text-base" size="lg">
-                                    Buy Ticket
-                                </Button>
+                                <Link href={`https://app.happenings.dk/buy/${event.id}`}>
+                                    <Button className="w-full h-11 text-base" size="lg">
+                                        Buy Ticket
+                                    </Button>
+                                </Link>
 
                                 <div className="flex gap-2">
                                     <TooltipProvider>
