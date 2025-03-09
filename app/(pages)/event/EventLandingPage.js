@@ -179,7 +179,7 @@ const EventLandingPage = ({ eventId }) => {
 
                 <div className="flex gap-2 w-full md:w-auto">
                     <Link href={`https://app.happenings.dk/buy/${event.id}`}>
-                        <Button className="flex-1 md:flex-none" variant="default" size="lg">
+                        <Button className="flex-1 md:flex-none bg-lime-500 hover:bg-lime-600 transition-colors duration-300 ease-in-out" variant="default" size="lg">
                             Buy Ticket
                         </Button>
                     </Link>
@@ -391,7 +391,7 @@ const EventLandingPage = ({ eventId }) => {
                             {/* Action Buttons */}
                             <div className="pt-4 space-y-3">
                                 <Link href={`https://app.happenings.dk/buy/${event.id}`}>
-                                    <Button className="w-full h-11 text-base" size="lg">
+                                    <Button className="w-full bg-lime-500 hover:bg-lime-600 transition-colors duration-300 ease-in-out h-11 text-base" size="lg">
                                         Buy Ticket
                                     </Button>
                                 </Link>
