@@ -1,201 +1,192 @@
 import Link from "next/link";
 import NavHeader from "../../universal/navigation/header/nav_bar";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Mail, Phone, MapPin, Building } from "lucide-react";
+import Image from "next/image";
 
 export default function ContactHero() {
   return (
-    <div className="bg-gradient-to-b from-gray-300 to-gray-50 py-24 sm:py-32">
-      <NavHeader />
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl space-y-16 divide-y divide-gray-100 lg:mx-0 lg:max-w-none">
-          <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-3">
-            <div>
-              <h2 className="text-3xl font-bold tracking-tight text-gray-900">
-                Talk to us
-              </h2>
-              <p className="mt-4 leading-7 text-gray-700">
-                If your question isn't answered in our{" "}
-                <Link
-                  href="/#faq"
-                  className="font-semibold text-blue-500 hover:underline underline-offset-2"
-                >
-                  FAQ
-                </Link>{" "}
-                or you need help, please don't be a stranger.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-2 lg:gap-8">
-              <div className="rounded-2xl bg-gray-50 p-10">
-                <h3 className="text-base font-semibold leading-7 text-gray-900">
-                  Help & Support
-                </h3>
-                <dl className="mt-2 space-y-1 text-sm leading-6 text-gray-600">
-                  <div>
-                    <dt className="sr-only">Email</dt>
-                    <dd>
-                      <Link
-                        href="mailto:help@happenings.social"
-                        className="font-regular text-blue-500 hover:underline underline-offset-2"
-                      >
-                        help@happenings.social
-                      </Link>
-                    </dd>
-                  </div>
-                  <div className="mt-2">
-                    <dt className="sr-only">Phone number</dt>
+      <div className="relative overflow-hidden">
+        {/* Background pattern */}
+       <Image
+           src="/background.webp"
+           alt={"background image"}
+           fill
+           priority
+       />
+
+        <div className="relative py-24 sm:py-32">
+          <NavHeader />
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl space-y-16 lg:mx-0 lg:max-w-none">
+              <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-3">
+                <div className="space-y-5">
+                <span className="inline-block rounded-lg bg-blue-500 px-3 py-1 text-sm font-medium text-white">
+                  Connect
+                </span>
+                  <h2 className="text-4xl font-bold tracking-tight text-white">
+                    Don't be a stranger
+                  </h2>
+                  <p className="mt-4 leading-7 text-gray-50">
+                    If your question isn't answered in our{" "}
                     <Link
-                      href="tel:+4531450914"
-                      className="hover:underline underline-offset-2 text-xs"
+                        href="/#faq"
+                        className="font-semibold text-blue-200 hover:text-blue-300 underline underline-offset-4"
                     >
-                      <dd>+45 31 45 09 14</dd>
-                    </Link>
-                  </div>
-                </dl>
-              </div>
-              <div className="rounded-2xl bg-gray-50 p-10">
-                <h3 className="text-base font-semibold leading-7 text-gray-900">
-                  Public Relations
-                </h3>
-                <dl className="mt-2 space-y-1 text-sm leading-6 text-gray-600">
-                  <div>
-                    <dt className="sr-only">Email</dt>
-                    <dd>
-                      <Link
-                        href="mailto:press@happenings.social"
-                        className="font-regular text-blue-500 hover:underline underline-offset-2"
-                      >
-                        press@happenings.social
-                      </Link>
-                    </dd>
-                  </div>
-                </dl>
-              </div>
-              <div className="rounded-2xl bg-gray-50 p-10">
-                <h3 className="text-base font-semibold leading-7 text-gray-900">
-                  Investors & Funds
-                </h3>
-                <dl className="mt-2 space-y-1 text-sm leading-6 text-gray-600">
-                  <div>
-                    <dt className="sr-only">Email</dt>
-                    <dd>
-                      <Link
-                        href="mailto:invest@happenings.social"
-                        className="font-regular text-blue-500 hover:underline underline-offset-2"
-                      >
-                        invest@happenings.social
-                      </Link>
-                    </dd>
-                  </div>
-                </dl>
-              </div>
-              <div className="rounded-2xl bg-gray-50 p-10">
-                <h3 className="text-base font-semibold leading-7 text-gray-900">
-                  Schools & Institutions
-                </h3>
-                <dl className="mt-2 space-y-1 text-sm leading-6 text-gray-600">
-                  <div>
-                    <dt className="sr-only">Email</dt>
-                    <dd>
-                      <Link
-                        href="mailto:school@happenings.social"
-                        className="font-regular text-blue-500 hover:underline underline-offset-2"
-                      >
-                        school@happenings.social
-                      </Link>
-                    </dd>
-                  </div>
-                </dl>
-              </div>
-              <div className="rounded-2xl bg-gray-50 p-10">
-                <h3 className="text-base font-semibold leading-7 text-gray-900">
-                  Business & Partnerships
-                </h3>
-                <dl className="mt-2 space-y-1 text-sm leading-6 text-gray-600">
-                  <div>
-                    <dt className="sr-only">Email</dt>
-                    <dd>
-                      <Link
-                        href="mailto:business@happenings.social"
-                        className="font-regular text-blue-500 hover:underline underline-offset-2"
-                      >
-                        business@happenings.social
-                      </Link>
-                    </dd>
-                  </div>
-                </dl>
+                      FAQ
+                    </Link>{" "}
+                    or you need help, please just reach out to us.
+                  </p>
+                </div>
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-2 lg:gap-8">
+                  <ContactCard
+                      title="Help & Support"
+                      email="help@happenings.social"
+                      phone="+45 31 45 09 14"
+                      icon={<Mail className="h-5 w-5 text-blue-500" />}
+                  />
+                  <ContactCard
+                      title="Public Relations"
+                      email="press@happenings.social"
+                      icon={<Mail className="h-5 w-5 text-blue-500" />}
+                  />
+                  <ContactCard
+                      title="Investors & Funds"
+                      email="invest@happenings.social"
+                      icon={<Mail className="h-5 w-5 text-blue-500" />}
+                  />
+                  <ContactCard
+                      title="Schools & Institutions"
+                      email="school@happenings.social"
+                      icon={<Mail className="h-5 w-5 text-blue-500" />}
+                  />
+                  <ContactCard
+                      title="Business & Partnerships"
+                      email="business@happenings.social"
+                      icon={<Mail className="h-5 w-5 text-blue-500" />}
+                  />
+                  <ContactCard
+                      title="Say Hello"
+                      email="hello@happenings.social"
+                      icon={<Mail className="h-5 w-5 text-blue-500" />}
+                  />
+                </div>
               </div>
 
-              <div className="rounded-2xl bg-gray-50 p-10">
-                <h3 className="text-base font-semibold leading-7 text-gray-900">
-                  Say Hello
-                </h3>
-                <dl className="mt-2 space-y-1 text-sm leading-6 text-gray-600">
-                  <div>
-                    <dt className="sr-only">Email</dt>
-                    <dd>
-                      <Link
-                        href="mailto:hello@happenings.social"
-                        className="font-regular text-blue-500 hover:underline underline-offset-2"
-                      >
-                        hello@happenings.social
-                      </Link>
-                    </dd>
-                  </div>
-                </dl>
-              </div>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 gap-x-8 gap-y-10 pt-16 lg:grid-cols-3">
-            <div>
-              <h2 className="text-3xl font-bold tracking-tight text-gray-900">
-                Meet & Greet
-              </h2>
-              <p className="mt-4 leading-7 text-gray-600">
-                A global team with a local presence. Come say hi.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-2 lg:gap-8">
-              <div className="rounded-2xl bg-gray-50 p-10">
-                <h3 className="text-base font-semibold leading-7 text-gray-900">
-                  Palo Alto
-                </h3>
-                <address className="mt-2 space-y-1 text-sm not-italic leading-6 text-gray-600">
-                  <p className="font-medium">United States</p>
-                  <p className="text-xs font-normal">Remote office</p>
-                </address>
-              </div>
-              <div className="rounded-2xl bg-gray-50 p-10">
-                <h3 className="text-base font-semibold leading-7 text-gray-900">
-                  Aarhus
-                </h3>
-                <address className="mt-2 space-y-1 text-sm not-italic leading-6 text-gray-600">
-                  <p className="font-medium">Denmark</p>
-                  <p className="text-xs font-normal">
-                    Klostergade 56B, St., 8000 Aarhus C
+              <Separator className="my-8 opacity-30" />
+
+              <div className="grid grid-cols-1 gap-x-8 gap-y-10 pt-16 lg:grid-cols-3">
+                <div className="space-y-5">
+                <span className="inline-block rounded-lg bg-green-500 px-3 py-1 text-sm font-medium text-white">
+                  Locations
+                </span>
+                  <h2 className="text-4xl font-bold tracking-tight text-white">
+                    Drop by to say hi
+                  </h2>
+                  <p className="mt-4 leading-7 text-white">
+                    We are a global team with a local presence. And you are welcome to come say hi.
                   </p>
-                </address>
-              </div>
-              <div className="rounded-2xl bg-gray-50 p-10">
-                <h3 className="text-base font-semibold leading-7 text-gray-900">
-                  Amsterdam
-                </h3>
-                <address className="mt-2 space-y-1 text-sm not-italic leading-6 text-gray-600">
-                  <p className="font-medium">The Netherlands</p>
-                  <p className="text-xs font-normal">Remote office</p>
-                </address>
-              </div>
-              <div className="rounded-2xl bg-gray-50 p-10">
-                <h3 className="text-base font-semibold leading-7 text-gray-900">
-                  Granada
-                </h3>
-                <address className="mt-2 space-y-1 text-sm not-italic leading-6 text-gray-600">
-                  <p className="font-medium">Spain</p>
-                  <p className="text-xs font-normal">Remote office</p>
-                </address>
+                </div>
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:col-span-2 lg:gap-8">
+                  <LocationCard
+                      city="Palo Alto"
+                      country="United States"
+                      address="Remote office"
+                      icon={<MapPin className="h-5 w-5 text-green-500" />}
+                  />
+                  <LocationCard
+                      city="Aarhus"
+                      country="Denmark"
+                      address="Klostergade 56B, St., 8000 Aarhus C"
+                      icon={<Building className="h-5 w-5 text-green-500" />}
+                      hasPhysicalAddress={true}
+                  />
+                  <LocationCard
+                      city="Amsterdam"
+                      country="The Netherlands"
+                      address="Remote office"
+                      icon={<MapPin className="h-5 w-5 text-green-500" />}
+                  />
+                  <LocationCard
+                      city="Granada"
+                      country="Spain"
+                      address="Remote office"
+                      icon={<MapPin className="h-5 w-5 text-green-500" />}
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+  );
+}
+
+// Contact Card Component
+function ContactCard({ title, email, phone, icon }) {
+  return (
+      <Card className="rounded-2xl border border-gray-200 bg-white backdrop-blur-sm shadow-sm hover:shadow-md transition-shadow duration-300">
+        <CardHeader className="p-6 pb-2 flex flex-row items-center space-x-2">
+          {icon && <div className="mt-1">{icon}</div>}
+          <CardTitle className="text-base font-semibold leading-7 text-gray-900">
+            {title}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="p-6 pt-2">
+          <div className="space-y-1 text-sm leading-6 text-gray-600">
+            {email && (
+                <div>
+                  <span className="sr-only">Email</span>
+                  <Link
+                      href={`mailto:${email}`}
+                      className="font-regular text-blue-600 hover:text-blue-800 hover:underline underline-offset-4 transition-colors duration-200"
+                  >
+                    {email}
+                  </Link>
+                </div>
+            )}
+            {phone && (
+                <div className="mt-2">
+                  <span className="sr-only">Phone number</span>
+                  <Link
+                      href={`tel:${phone.replace(/\s/g, '')}`}
+                      className="text-xs hover:text-gray-900 hover:underline underline-offset-4 transition-colors duration-200 flex items-center"
+                  >
+                    <Phone className="h-3 w-3 mr-2 text-gray-500" />
+                    {phone}
+                  </Link>
+                </div>
+            )}
+          </div>
+        </CardContent>
+      </Card>
+  );
+}
+
+// Location Card Component
+function LocationCard({ city, country, address, icon, hasPhysicalAddress }) {
+  return (
+      <Card className={`rounded-2xl border border-gray-200 bg-white backdrop-blur-sm shadow-sm hover:shadow-md transition-shadow duration-300 ${hasPhysicalAddress ? 'ring-1 ring-green-500/10' : ''}`}>
+        <CardHeader className="p-6 pb-2 flex flex-row items-center space-x-2">
+          {icon && <div className="mt-1">{icon}</div>}
+          <CardTitle className="text-base font-semibold leading-7 text-gray-900">
+            {city}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="p-6 pt-2">
+          <address className="space-y-1 text-sm not-italic leading-6 text-gray-600">
+            <p className="font-medium">{country}</p>
+            <p className={`text-xs ${hasPhysicalAddress ? 'font-normal text-green-700' : 'font-normal text-gray-500'}`}>
+              {address}
+            </p>
+          </address>
+        </CardContent>
+      </Card>
   );
 }
