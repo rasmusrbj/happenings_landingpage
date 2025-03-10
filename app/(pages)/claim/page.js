@@ -13,6 +13,7 @@ import { Separator } from '@/components/ui/separator';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { CheckCircle, Users, Calendar, Ticket, Shield, Target, CreditCard } from 'lucide-react';
 import NavHeader from "@/app/(components)/universal/navigation/header/nav_bar";
+import PhoneInput from "@/app/(pages)/claim/PhoneInput";
 
 const benefits = [
     "Completely free, forever",
@@ -88,7 +89,23 @@ export default function ClaimMyClubPage() {
         }
     };
 
-    // Validate form
+    // Handle phone number change from PhoneInput component
+    const handlePhoneChange = (value) => {
+        setFormData({
+            ...formData,
+            phoneNumber: value
+        });
+
+        // Clear error for this field when user types
+        if (errors.phoneNumber) {
+            setErrors({
+                ...errors,
+                phoneNumber: null
+            });
+        }
+    };
+
+    /// Validate form
     const validateForm = () => {
         const newErrors = {};
 
@@ -104,8 +121,9 @@ export default function ClaimMyClubPage() {
             newErrors.clubName = "Club name must be at least 2 characters.";
         }
 
-        if (!formData.phoneNumber || formData.phoneNumber.length < 10) {
-            newErrors.phoneNumber = "Please enter a valid phone number.";
+        // Check if phone number contains a country code and at least 5 digits
+        if (!formData.phoneNumber || !/^\+\d{1,4}\s\d{5,}$/.test(formData.phoneNumber)) {
+            newErrors.phoneNumber = "Please enter a valid phone number with country code.";
         }
 
         setErrors(newErrors);
@@ -113,28 +131,48 @@ export default function ClaimMyClubPage() {
     };
 
     // Form submission handler
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (validateForm()) {
-            console.log("Form submitted:", formData);
-            // TODO: Implement API call to submit form data
+            try {
+                const response = await fetch('/api/submit-form', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        ...formData,
+                        recipient: "onboarding@happenings.social"
+                    }),
+                });
 
-            // Show success message
-            setSuccess(true);
+                if (response.ok) {
+                    // Show success message
+                    setSuccess(true);
 
-            // Reset form
-            setFormData({
-                personalName: "",
-                email: "",
-                clubName: "",
-                phoneNumber: ""
-            });
+                    // Reset form
+                    setFormData({
+                        personalName: "",
+                        email: "",
+                        clubName: "",
+                        phoneNumber: ""
+                    });
 
-            // Hide success message after 5 seconds
-            setTimeout(() => {
-                setSuccess(false);
-            }, 5000);
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        setSuccess(false);
+                    }, 5000);
+                } else {
+                    throw new Error('Failed to submit form');
+                }
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                setErrors({
+                    ...errors,
+                    submit: "There was a problem submitting your request. Please try again."
+                });
+            }
         }
     };
 
@@ -236,6 +274,19 @@ export default function ClaimMyClubPage() {
                                     </Alert>
                                 )}
 
+                                {errors.submit && (
+                                    <Alert className="mb-6 bg-red-50 text-red-800 border border-red-200 rounded-lg">
+                                        <div className="flex items-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-red-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                                            </svg>
+                                            <AlertDescription>
+                                                {errors.submit}
+                                            </AlertDescription>
+                                        </div>
+                                    </Alert>
+                                )}
+
                                 <form onSubmit={handleSubmit} className="space-y-6">
                                     <div className="space-y-2">
                                         <Label htmlFor="personalName" className="text-gray-700 font-medium">Your Name</Label>
@@ -306,13 +357,9 @@ export default function ClaimMyClubPage() {
 
                                     <div className="space-y-2">
                                         <Label htmlFor="phoneNumber" className="text-gray-700 font-medium">Phone Number</Label>
-                                        <Input
-                                            id="phoneNumber"
-                                            name="phoneNumber"
-                                            placeholder="(123) 456-7890"
+                                        <PhoneInput
                                             value={formData.phoneNumber}
-                                            onChange={handleChange}
-                                            className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                                            onChange={handlePhoneChange}
                                         />
                                         <p className="text-sm text-gray-500 flex items-center gap-1">
                                             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
@@ -357,6 +404,7 @@ export default function ClaimMyClubPage() {
                     </div>
                 </div>
             </div>
+
 
             {/* Footer with Wave */}
             <div className="relative mt-16">
