@@ -7,6 +7,7 @@ import Link from "next/link";
 import RegisterNavBlue from "../../buttons/register_nav_blue";
 import LoginaNavWhite from "../../buttons/login_nav_white";
 import { track } from "@vercel/analytics";
+import Image from "next/image";
 
 const navigation = [
   { name: "Product", href: "/product" },
@@ -31,6 +32,13 @@ export default function NavHeader() {
           >
             <span className="sr-only">Happenings</span>
             <div className="flex flex-row gap-2 items-center">
+              <Image
+                  src="logo.svg"
+                  alt={"logo"}
+                  height={16}
+                  width={16}
+                  priority
+              />
               <p className="font-bold text-sm text-white hover:underline underline-offset-2">
                 Happenings
               </p>

@@ -12,6 +12,7 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { CheckCircle, Users, Calendar, Ticket, Shield, Target, CreditCard } from 'lucide-react';
+import NavHeader from "@/app/(components)/universal/navigation/header/nav_bar";
 
 const benefits = [
     "Completely free, forever",
@@ -138,6 +139,8 @@ export default function ClaimMyClubPage() {
     };
 
     return (
+        <>
+        <NavHeader />
         <div className="bg-gradient-to-b from-blue-50 to-white min-h-screen">
             {/* Hero Section with Background Image */}
             <div className="relative">
@@ -167,26 +170,6 @@ export default function ClaimMyClubPage() {
             </div>
 
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 -mt-6 relative z-10">
-                {/* Benefits Showcase - Visual Cards */}
-                <div className="mb-16">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl font-bold text-gray-900">Why Choose Happenings?</h2>
-                        <p className="mt-4 text-xl text-gray-600">Get a helping hand designed to work for you</p>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {benefits.map((benefit, index) => (
-                            <div key={index} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                                <div className="p-8">
-                                    <div className="flex items-center justify-center w-12 h-12 rounded-md bg-blue-100 text-blue-600 mb-4">
-                                        <CheckCircle className="h-6 w-6" />
-                                    </div>
-                                    <h3 className="text-xl font-semibold text-gray-900 mb-2">{benefit}</h3>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-
                 {/* Main Content */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                     {/* Features Column - Visual Cards */}
@@ -221,11 +204,11 @@ export default function ClaimMyClubPage() {
                                         <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
                                     </svg>
                                     <p className="relative text-lg text-gray-600 italic mt-6 ml-4">
-                                        "Happenings transformed how we manage our photography club. Everything from event planning to member management is now seamless."
+                                        "Happenings transformed how we manage our club. Everything from event planning to member management is now seamless."
                                     </p>
                                     <div className="mt-4 ml-4">
-                                        <p className="text-base font-medium text-gray-900">Sarah Johnson</p>
-                                        <p className="text-sm text-gray-500">President, Photography Club</p>
+                                        <p className="text-base font-medium text-gray-900">Julie Meyer</p>
+                                        <p className="text-sm text-gray-500">Club Master, Juridisk Diskussionsklub, KU</p>
                                     </div>
                                 </div>
                             </CardContent>
@@ -399,5 +382,6 @@ export default function ClaimMyClubPage() {
                 </div>
             </div>
         </div>
+        </>
     );
 }
