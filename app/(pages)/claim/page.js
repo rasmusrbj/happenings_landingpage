@@ -342,9 +342,9 @@ export default function ClaimMyClubPage() {
                             <CardFooter className="flex flex-col space-y-4 bg-gray-50 p-6">
                                 <div className="flex items-center justify-center space-x-4">
                                     <div className="flex -space-x-2">
-                                        <img src="/api/placeholder/50/50" alt="User" className="w-8 h-8 rounded-full border-2 border-white" />
-                                        <img src="/api/placeholder/50/50" alt="User" className="w-8 h-8 rounded-full border-2 border-white" />
-                                        <img src="/api/placeholder/50/50" alt="User" className="w-8 h-8 rounded-full border-2 border-white" />
+                                        <img src="/sl.webp" alt="User" className="w-8 h-8 rounded-full border-2 border-white" />
+                                        <img src="/jdku.webp" alt="User" className="w-8 h-8 rounded-full border-2 border-white" />
+                                        <img src="/elsa.webp" alt="User" className="w-8 h-8 rounded-full border-2 border-white" />
                                     </div>
                                     <p className="text-sm text-gray-600">Join 500+ club leaders</p>
                                 </div>
