@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/react";
 import { Toaster } from 'sonner'
+import "../fontawesome.js";
 
 const inter = Inter({ subsets: ["latin"] });
 

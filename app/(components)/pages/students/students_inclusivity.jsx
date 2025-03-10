@@ -1,11 +1,16 @@
+import Image from "next/image";
+import Link from "next/link";
+
 export default function StudentInclusivity() {
   return (
     <div className="relative bg-gray-800 px-6 py-32 sm:px-12 sm:py-40 lg:px-16">
       <div className="absolute inset-0 overflow-hidden">
-        <img
+        <Image
           alt=""
-          src="https://media.istockphoto.com/id/1092744152/es/foto/s%C3%ADmbolo-de-trabajo-en-equipo-cooperaci%C3%B3n-y-unidad.jpg?s=2048x2048&w=is&k=20&c=9Q9uBBs0-hZRs2UoM1qr3lJhqoDRxp6bhTyOwl11_Xc="
+          src="/background.wepb"
           className="h-full w-full object-cover object-center opacity-85"
+          fill
+          priority
         />
       </div>
       <div
@@ -20,12 +25,12 @@ export default function StudentInclusivity() {
           Regardless of background, interests, or social circles, there is a
           place for you.
         </p>
-        <a
+        <Link
           href="#"
           className="mt-8 block w-full max-w-36 rounded-3xl border border-transparent bg-white px-8 py-3 text-base font-medium text-gray-900 hover:bg-gray-100 sm:w-auto"
         >
           Objectives
-        </a>
+        </Link>
       </div>
     </div>
   );

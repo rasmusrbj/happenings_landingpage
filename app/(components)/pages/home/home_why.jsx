@@ -5,7 +5,7 @@ import {
   StarIcon,
 } from "@heroicons/react/24/outline";
 import { track } from "@vercel/analytics/react";
-
+import Image from "next/image";
 import Link from "next/link";
 
 const features = [
@@ -71,12 +71,13 @@ export default function HomeWhy() {
                 </button>
               </div>
             </div>
-            <img
+            <Image
               alt="Product screenshot"
               src="/images/benefits.webp"
               width={2432}
               height={1442}
               className="relative -z-20 min-w-full max-w-xl rounded-xl shadow-xl ring-1 ring-white/10 lg:row-span-4 lg:w-[64rem] lg:max-w-none"
+              priority
             />
             <div className="max-w-xl lg:row-start-3 lg:mt-8 lg:max-w-md lg:border-t lg:border-white/10 lg:pt-4">
               <dl className="max-w-xl space-y-8 text-base leading-7 text-gray-400 lg:max-w-none">

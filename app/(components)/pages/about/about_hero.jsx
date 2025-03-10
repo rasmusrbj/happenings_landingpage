@@ -4,6 +4,7 @@ import Link from "next/link";
 import NavHeader from "../../universal/navigation/header/nav_bar";
 import HappeningsRegister from "../../universal/buttons/happenings_register";
 import { track } from "@vercel/analytics";
+import Image from "next/image";
 
 export default function AboutHero() {
   return (
@@ -12,10 +13,12 @@ export default function AboutHero() {
       <div className="relative bg-gray-900">
         {/* Decorative image and overlay */}
         <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
-          <img
-            alt=""
-            src="/images/about/screwdriver.webp"
+          <Image
+            alt="Background"
+            src="/background_three.webp"
             className="h-full w-full object-cover object-center"
+            fill
+            priority
           />
         </div>
         <div

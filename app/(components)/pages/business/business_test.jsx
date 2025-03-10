@@ -131,10 +131,10 @@ export default function BusinessTest() {
                       {collection.title}
                     </p>
                     <h3 className="mt-1 font-semibold text-white">
-                      <a href={collection.href}>
+                      <Link href={collection.href}>
                         <span className="absolute inset-0" />
                         {collection.name}
-                      </a>
+                      </Link>
                     </h3>
                   </div>
                 </div>

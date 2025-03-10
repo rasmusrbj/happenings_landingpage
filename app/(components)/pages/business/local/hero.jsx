@@ -1,5 +1,8 @@
 import NavHeaderDark from "@/app/(components)/universal/navigation/header/nav_bar_dark";
 import { ChevronRightIcon } from "@heroicons/react/20/solid";
+import Link from "next/link";
+import Image from "next/image";
+
 
 export default function HeroLocal() {
   return (
@@ -14,14 +17,14 @@ export default function HeroLocal() {
                   Succes story
                 </span>
                 <span aria-hidden="true" className="h-4 w-px bg-gray-900/10" />
-                <a href="#" className="flex items-center gap-x-1">
+                <Link href="#" className="flex items-center gap-x-1">
                   <span aria-hidden="true" className="absolute inset-0" />
                   See more
                   <ChevronRightIcon
                     aria-hidden="true"
                     className="-mr-2 h-5 w-5 text-gray-400"
                   />
-                </a>
+                </Link>
               </div>
             </div>
             <h1 className="mt-10 max-w-2xl text-4xl font-bold tracking-tight text-gray-900 sm:text-7xl">
@@ -32,18 +35,18 @@ export default function HeroLocal() {
               hangout – boost your visibility and reach them where they are.
             </p>
             <div className="mt-10 flex items-center gap-x-6">
-              <a
+              <Link
                 href="#"
                 className="rounded-3xl bg-blue-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Get started
-              </a>
-              <a
+              </Link>
+              <Link
                 href="#"
                 className="text-sm font-semibold leading-6 text-gray-900"
               >
                 Learn more <span aria-hidden="true">→</span>
-              </a>
+              </Link>
             </div>
           </div>
           <div className="mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow">
@@ -72,7 +75,12 @@ export default function HeroLocal() {
                 clipPath="url(#2ade4387-9c63-4fc4-b754-10e687a0d332)"
                 transform="translate(24 24)"
               >
-                <img alt="" src="/images/payment.jpeg" />
+                <Image
+                    alt="payment options"
+                    src="/images/payment.jpeg"
+                    fill
+                    priority
+                />
               </foreignObject>
             </svg>
           </div>

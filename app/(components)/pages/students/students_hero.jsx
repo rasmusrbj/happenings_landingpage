@@ -1,5 +1,7 @@
 import HappeningsRegister from "../../universal/buttons/happenings_register";
 import NavHeader from "../../universal/navigation/header/nav_bar";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function StudentsHero() {
   return (
@@ -8,10 +10,12 @@ export default function StudentsHero() {
       <div className="relative bg-gray-900">
         {/* Decorative image and overlay */}
         <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
-          <img
+          <Image
             alt=""
-            src="https://media.istockphoto.com/id/2087707686/es/foto/grupo-de-amigas-asi%C3%A1ticas-jugando-juntas-en-la-playa.jpg?s=2048x2048&w=is&k=20&c=WhS-8Xqh_u7vWs4q1mADsGjwtmtQlqsfkVnE1vQ9Jv4="
+            src="/background.webp"
             className="h-full w-full object-cover object-center"
+            fill
+            priority
           />
         </div>
         <div
@@ -28,12 +32,12 @@ export default function StudentsHero() {
           <p className="mt-4 text-xl text-white">
             Helping you stay connected with your friends and school community.
           </p>
-          <a
+          <Link
             href="#"
             className="mt-8 inline-block rounded-3xl border border-transparent bg-blue-600 px-8 py-3 text-base font-medium text-white hover:bg-blue-500"
           >
             Register
-          </a>
+          </Link>
         </div>
       </div>
     </div>

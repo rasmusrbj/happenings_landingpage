@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const features = [
   {
     name: "Blockchain",
@@ -50,25 +52,29 @@ export default function ProductSpecifications() {
           </dl>
         </div>
         <div className="grid grid-cols-2 grid-rows-2 gap-4 sm:gap-6 lg:gap-8">
-          <img
+          <Image
             alt="Walnut card tray with white powder coated steel divider and 3 punchout holes."
-            src="https://tailwindui.com/img/ecommerce-images/product-feature-03-detail-01.jpg"
+            src="/background.webp"
             className="rounded-lg bg-gray-100"
+            fill
           />
-          <img
+          <Image
             alt="Top down view of walnut card tray with embedded magnets and card groove."
-            src="https://tailwindui.com/img/ecommerce-images/product-feature-03-detail-02.jpg"
+            src="/background_two.webp"
             className="rounded-lg bg-gray-100"
+            fill
           />
-          <img
+          <Image
             alt="Side of walnut card tray with card groove and recessed card area."
-            src="https://tailwindui.com/img/ecommerce-images/product-feature-03-detail-03.jpg"
-            className="rounded-lg bg-gray-100"
+            src="/background_three.webp"
+            className="rounded-lg"
+            fill
           />
-          <img
+          <Image
             alt="Walnut card tray filled with cards and card angled in dedicated groove."
-            src="https://tailwindui.com/img/ecommerce-images/product-feature-03-detail-04.jpg"
+            src="/background_four.webp"
             className="rounded-lg bg-gray-100"
+            fill
           />
         </div>
       </div>

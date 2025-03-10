@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 
 const benefitsStudents = [
@@ -64,10 +65,13 @@ export default function HomeSegments() {
           <div className="mt-16 grid grid-cols-1 gap-y-16 lg:grid-cols-2 lg:gap-x-8">
             <div>
               <div className="aspect-h-2 aspect-w-3 w-full overflow-hidden rounded-lg">
-                <img
+                <Image
                   alt="Drawstring top with elastic loop closure and textured interior padding."
-                  src="https://media.istockphoto.com/id/1522149323/es/foto/grupo-de-amigos-multi%C3%A9tnicos-disfrutando-de-su-tiempo-en-la-ciudad-de-copenhague.jpg?s=2048x2048&w=is&k=20&c=F2-lLMRMKsTlXaO_c1q3zDV1gsGFLna3ccYdtvJTYxs="
+                  src="/background_four.webp"
                   className="h-80 w-full object-cover object-center"
+                  height={80}
+                  width={160}
+                  priority
                 />
               </div>
               <h2 className="mt-4 text-2xl font-bold tracking-tight text-gray-900">
@@ -98,10 +102,13 @@ export default function HomeSegments() {
             </div>
             <div>
               <div className="aspect-h-2 aspect-w-3 w-full overflow-hidden rounded-lg">
-                <img
-                  alt="Drawstring top with elastic loop closure and textured interior padding."
-                  src="https://media.istockphoto.com/id/1482584637/es/foto/vista-trasera-de-personas-multigeneracionales-felices-divirti%C3%A9ndose-en-un-parque-p%C3%BAblico.webp?s=2048x2048&w=is&k=20&c=rfTVnp_A8NNyRUnFduxwbYt2h1QUkePUPp_UP3fJiLY="
+                <Image
+                  alt="Background image 5"
+                  src="/background_five.webp"
                   className="h-80 w-full object-cover object-center"
+                  height={80}
+                  width={160}
+                  priority
                 />
               </div>
               <h2 className="mt-4 text-2xl font-bold tracking-tight text-gray-900">

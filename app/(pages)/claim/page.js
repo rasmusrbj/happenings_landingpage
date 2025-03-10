@@ -195,9 +195,9 @@ export default function ClaimMyClubPage() {
                         </p>
                         <div className="mt-10 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-center">
                             <div className="space-y-4 sm:space-y-0 sm:mx-auto">
-                                <a href="#request-form" className="flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-blue-700 bg-white hover:bg-blue-50 md:py-4 md:text-lg md:px-10 shadow-lg transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1">
+                                <Link href="#request-form" className="flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-blue-700 bg-white hover:bg-blue-50 md:py-4 md:text-lg md:px-10 shadow-lg transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1">
                                     Get Started Now
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>

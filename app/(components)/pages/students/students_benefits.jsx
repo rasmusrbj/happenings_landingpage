@@ -1,19 +1,16 @@
+import Image from "next/image";
+
 const features = [
   {
     name: "Back to basics",
-    description:
-      "Our cause is that social tools should be resulting in meaningful, real life interactions. We do not believe the purpose of technology is to replace reality.",
-    imageSrc:
-      "https://media.istockphoto.com/id/1471629757/es/foto/suping-en-la-playa.jpg?s=2048x2048&w=is&k=20&c=BkLSAwQkAKSUHrcPCaPLFBL2N5UblMRO0LO-dicNWFk=",
-    imageAlt:
-      "White canvas laptop sleeve with gray felt interior, silver zipper, and tan leather zipper pull.",
+    description: "Our cause is that social tools should be resulting in meaningful, real life interactions. We do not believe the purpose of technology is to replace reality.",
+    imageSrc: "/background.wepb",
+    imageAlt: "White canvas laptop sleeve with gray felt interior, silver zipper, and tan leather zipper pull.",
   },
   {
     name: "Do more together",
-    description:
-      "We say ‘circles’ because we invite clubs, greek life, associations, dorms and everything in between to use technology as a means to foster genuine connections.",
-    imageSrc:
-      "https://media.istockphoto.com/id/1384618716/es/foto/grupo-multirracial-de-amigos-tomando-selfie-foto-afuera-felices-diferentes-j%C3%B3venes.webp?s=2048x2048&w=is&k=20&c=9ayblK-VksRw26CqlnwLLZv9FAtuyIY3lrVqcJjhfQs=",
+    description: "We say ‘circles’ because we invite clubs, greek life, associations, dorms and everything in between to use technology as a means to foster genuine connections.",
+    imageSrc: "/background_two.wepb",
     imageAlt: "Detail of zipper pull with tan leather and silver rivet.",
   },
 ];
@@ -68,10 +65,12 @@ export default function StudentsBenefits() {
                 )}
               >
                 <div className="aspect-h-2 aspect-w-5 overflow-hidden rounded-lg bg-gray-100">
-                  <img
+                  <Image
                     alt={feature.imageAlt}
                     src={feature.imageSrc}
                     className="object-cover object-center max-h-96  w-full"
+                    fill
+                    priority
                   />
                 </div>
               </div>
