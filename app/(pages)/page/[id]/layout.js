@@ -3,6 +3,10 @@ import { Inter } from 'next/font/google';
 import '@/app/globals.css';
 import { generateMetadata } from './metadata';
 import Link from 'next/link';
+import Image from 'next/image';
+import {Button} from '/app/(components)/universal/buttons/Button'
+import Footer from "@/app/(components)/universal/navigation/footer/footer";
+
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -14,12 +18,27 @@ export default function OrganizationLayout({ children }) {
         <div className={`${inter.className} min-h-screen bg-gray-50`}>
             <header className="bg-white shadow-sm">
                 <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-                    <a href="/" className="text-xl font-bold">Happenings</a>
+                    <Link href="/" className="hover:opacity-70 transition-opacity duration-300 ease-in-out">
+                        <div className="flex flex-row items-center justify-between gap-2">
+                            <Image
+                                src={'/logo.svg'}
+                                alt="Logo"
+                                width={16}
+                                height={16}
+                                priority
+                            />
+                            <h1 className="text-md font-bold">Happenings</h1>
+                        </div>
+                    </Link>
                     <nav>
                         <ul className="flex space-x-6">
-                            <li><Link href="/" className="hover:text-blue-600 transition-colors">Home</Link></li>
-                            <li><Link href="/discover" className="hover:text-blue-600 transition-colors">Discover</Link></li>
-                            <li><Link href="/page" className="hover:text-blue-600 transition-colors">Pages</Link></li>
+                            <li>
+                                <Button className="rounded-3xl">
+                                    <Link href="/claim">
+                                    Try in your club
+                                    </Link>
+                                </Button>
+                            </li>
                         </ul>
                     </nav>
                 </div>
@@ -27,11 +46,7 @@ export default function OrganizationLayout({ children }) {
             <main>
                 {children}
             </main>
-            <footer className="bg-white mt-12 py-6 border-t">
-                <div className="container mx-auto px-4 text-center text-gray-500">
-                    <p>&copy; {new Date().getFullYear()} Happenings Platform. All rights reserved.</p>
-                </div>
-            </footer>
+           <Footer />
         </div>
     );
 }
