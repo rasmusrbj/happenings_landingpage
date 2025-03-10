@@ -15,7 +15,7 @@ export default function EventLayout({ children }) {
     return (
         <div className={`${inter.className} min-h-screen bg-gray-50`}>
             <header className="bg-white shadow-sm">
-                <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+                <div className="container mx-auto px-4 py-4 flex justify-between items-center max-w-6xl">
                     <Link href="/" className="hover:opacity-70 transition-opacity duration-300 ease-in-out">
                         <div className="flex flex-row items-center justify-between gap-2">
                             <Image

@@ -369,8 +369,9 @@ const EventLandingPage = ({ eventId }) => {
 
                             {/* Organizer */}
                             <div className="pt-2">
-                                <p className="font-medium">Organizer</p>
-                                <div className="flex items-center mt-2">
+                                <p className="font-medium mb-2">See more from</p>
+                                <Link href={`/page/${event.page.user_name}`} className="hover:opacity-70 transition-opacity duration-300 ease-in-out">
+                                <div className="flex items-center mt-2 p-4 bg-gray-50 rounded-xl">
                                     {event.host.image && event.host.image.small ? (
                                         <Image
                                             src={event.host.image.small}
@@ -382,8 +383,9 @@ const EventLandingPage = ({ eventId }) => {
                                     ) : (
                                         <div className="w-10 h-10 rounded-full bg-gray-200 mr-3" />
                                     )}
-                                    <span>{event.host.name}</span>
+                                    <span className="font-medium">{event.host.name}</span>
                                 </div>
+                                </Link>
                             </div>
 
                             <Separator />
