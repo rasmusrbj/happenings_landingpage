@@ -14,9 +14,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full bg-gray-50">
       <body className={`${inter.className} h-full`}>
-        <Toaster position="bottom-right" />
         {children}
-        <Toaster />
+        <Toaster position="bottom-right" />
         <Analytics />
       </body>
     </html>
