@@ -3,13 +3,6 @@ import { Check, ChevronsUpDown } from 'lucide-react';
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
-    Command,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-} from "@/components/ui/command";
-import {
     Popover,
     PopoverContent,
     PopoverTrigger,
@@ -54,16 +47,23 @@ const PhoneInput = ({ value, onChange, error }) => {
         return value || '';
     });
 
-    const handleCountryChange = (country) => {
-        setCountryCode(country);
-        updateCombinedValue(country.value, phoneNumber);
+    const handleCountryChange = (code) => {
+        // Find the country object from the countryCodes array
+        const selectedCountry = countryCodes.find(c => c.code === code);
+
+        if (selectedCountry) {
+            setCountryCode(selectedCountry);
+            updateCombinedValue(selectedCountry.value, phoneNumber);
+        }
         setOpen(false);
     };
 
     const handlePhoneChange = (e) => {
         const newPhone = e.target.value;
         setPhoneNumber(newPhone);
-        updateCombinedValue(countryCode.value, newPhone);
+        if (countryCode && countryCode.value) {
+            updateCombinedValue(countryCode.value, newPhone);
+        }
     };
 
     const updateCombinedValue = (code, number) => {
@@ -85,27 +85,32 @@ const PhoneInput = ({ value, onChange, error }) => {
                     </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-48 p-0">
-                    <Command>
-                        <CommandInput placeholder="Search country..." />
-                        <CommandEmpty>No country found.</CommandEmpty>
-                        <CommandGroup className="max-h-64 overflow-y-auto">
+                    <div className="bg-white rounded-md shadow-md max-h-64 overflow-y-auto">
+                        <div className="p-2">
+                            <input
+                                className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Search country..."
+                            />
+                        </div>
+                        <div className="py-2">
                             {countryCodes.map((country) => (
-                                <CommandItem
+                                <div
                                     key={country.code}
-                                    value={country.code}
-                                    onSelect={() => handleCountryChange(country)}
+                                    className={`flex items-center px-2 py-1.5 cursor-pointer hover:bg-gray-100 ${
+                                        countryCode?.code === country.code ? "bg-blue-50" : ""
+                                    }`}
+                                    onClick={() => handleCountryChange(country.code)}
                                 >
                                     <Check
-                                        className={cn(
-                                            "mr-2 h-4 w-4",
+                                        className={`mr-2 h-4 w-4 ${
                                             countryCode?.code === country.code ? "opacity-100" : "opacity-0"
-                                        )}
+                                        }`}
                                     />
                                     {country.label}
-                                </CommandItem>
+                                </div>
                             ))}
-                        </CommandGroup>
-                    </Command>
+                        </div>
+                    </div>
                 </PopoverContent>
             </Popover>
             <Input

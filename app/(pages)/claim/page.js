@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+import Link from 'next/link';
 
 // Import Shadcn components
 import { Button } from '@/components/ui/button';
@@ -14,6 +15,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { CheckCircle, Users, Calendar, Ticket, Shield, Target, CreditCard } from 'lucide-react';
 import NavHeader from "@/app/(components)/universal/navigation/header/nav_bar";
 import PhoneInput from "@/app/(pages)/claim/PhoneInput";
+import Footer from "@/app/(components)/universal/navigation/footer/footer";
 
 const benefits = [
     "Completely free, forever",
@@ -421,15 +423,16 @@ export default function ClaimMyClubPage() {
                                 Join the community of student leaders using Happenings to build better club experiences.
                             </p>
                             <div className="mt-8">
-                                <a href="#request-form" className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700">
+                                <Link href="#request-form" className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700">
                                     Claim your club now
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+            <Footer />
         </>
     );
 }
