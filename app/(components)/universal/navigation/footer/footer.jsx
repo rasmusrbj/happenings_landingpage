@@ -3,6 +3,8 @@ import HappeningsRegisterDark from "../../buttons/happenings_register_dark";
 const navigation = {
   main: [
     { name: "Home", href: "/" },
+    { name: "Help", href: "/help" },
+    { name: "Support", href: "https://m.me/happenings.dk" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
     { name: "Terms", href: "/students" },
