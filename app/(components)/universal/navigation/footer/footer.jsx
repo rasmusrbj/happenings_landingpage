@@ -8,7 +8,7 @@ const navigation = {
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
     { name: "Terms", href: "/legal/terms" },
-    { name: "Privacy", href: "/leaders" },
+    { name: "Privacy", href: "/legal/privacy" },
     { name: "Register", href: "https://get.happenings.dk" },
     { name: "Login", href: "https://get.happenings.dk" },
     { name: "Business", href: "/business" },
