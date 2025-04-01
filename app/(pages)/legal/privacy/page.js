@@ -3,11 +3,11 @@
 import PrivacyComponent from "@/app/(pages)/legal/privacy/PrivacyComponent";
 
 export const metadata = {
-    title: 'Happenings - Privatlivspolitik',
-    description: 'Privatlivspolitik for Happenings Group A/S',
+    title: 'Happenings - Privacy Policy',
+    description: 'Privacy Policy for Happenings Group A/S',
     openGraph: {
-        title: 'Happenings - Privatlivspolitik',
-        description: 'Privatlivspolitik for Happenings Group A/S',
+        title: 'Happenings - Privacy Policy',
+        description: 'Privacy Policy for Happenings Group A/S',
         images: [
             {
                 url: '/images/app_leaders.webp',
@@ -20,8 +20,8 @@ export const metadata = {
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Happenings - Privatlivspolitik',
-        description: 'Privatlivspolitik for Happenings Group A/S',
+        title: 'Happenings - Privacy Policy',
+        description: 'Privacy Policy for Happenings Group A/S',
         images: ['/images/app_leaders.webp'],
     },
 };
