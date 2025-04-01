@@ -102,9 +102,9 @@ export default function TicketPage({ initialData }) {
             <div className="flex justify-center items-center min-h-screen">
                 <Alert variant="destructive" className="max-w-md">
                     <AlertCircle className="h-4 w-4" />
-                    <AlertTitle>Ugyldig billet</AlertTitle>
+                    <AlertTitle>Invalid ticket</AlertTitle>
                     <AlertDescription>
-                        Dette er ikke en gyldig billet
+                        This is NOT a valid ticket.
                     </AlertDescription>
                 </Alert>
             </div>
@@ -126,7 +126,7 @@ export default function TicketPage({ initialData }) {
     let timeUsed = '';
     if (data?.time_used?.seconds) {
         const timeUsedDate = new Date(data.time_used.seconds * 1000);
-        timeUsed = `Billetten blev swipet kl. ${timeUsedDate.toLocaleDateString("da-DK", {
+        timeUsed = `This ticket was swiped at ${timeUsedDate.toLocaleDateString("da-DK", {
             year: "numeric",
             hour: "2-digit",
             minute: "2-digit",
@@ -140,14 +140,14 @@ export default function TicketPage({ initialData }) {
             <div className="w-full max-w-md">
                 <TicketCard
                     image={image}
-                    title="Denne billet er gyldig"
+                    title="This ticket is valid"
                     fullName={fullName}
                     id={id}
                     eventTitle={eventTitle}
                     pageTitle={pageTitle}
                     pageImage={pageImage}
                     pageUserName={pageUserName}
-                    notUsed="Billet ikke brugt"
+                    notUsed="This ticket has not yet been swiped"
                     timeUsed={timeUsed}
                     isUsed={isUsed}
                 />

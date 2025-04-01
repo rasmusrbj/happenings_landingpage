@@ -24,14 +24,14 @@ async function getTicketData(id) {
 }
 
 export async function generateMetadata(props) {
-    const id = props.params?.id;
+    const id = await props.params?.id;
 
     // Await the data
     const data = await getTicketData(id);
 
     if (!data) {
         return {
-            title: 'Happenings | Ugyldig Billet',
+            title: 'Happenings | Invalid Ticket',
         };
     }
 
