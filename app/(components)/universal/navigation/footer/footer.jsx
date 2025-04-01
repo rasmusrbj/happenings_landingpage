@@ -7,7 +7,7 @@ const navigation = {
     { name: "Support", href: "https://m.me/happenings.dk" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
-    { name: "Terms", href: "/students" },
+    { name: "Terms", href: "/legal/terms" },
     { name: "Privacy", href: "/leaders" },
     { name: "Register", href: "https://get.happenings.dk" },
     { name: "Login", href: "https://get.happenings.dk" },
