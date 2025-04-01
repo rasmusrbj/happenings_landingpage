@@ -107,7 +107,7 @@ export default function NavHeader() {
               <div className="flex flex-row gap-2 items-center">
                 <img
                   alt=""
-                  src="https://happenings.dk/static/logo_color.svg"
+                  src="/logo.svg"
                   className="h-6 w-auto"
                 />
                 <p className="font-bold text-sm text-white">Happenings</p>
