@@ -27,7 +27,7 @@ const HelpDesk = () => {
         {
             id: "reset-password",
             category: "account",
-            title: "How to reset your password",
+            title: "How to reset your password (if logged in)",
             content: (
                 <div className="space-y-4">
                     <p>You can change your password in the app by following these steps:</p>
@@ -113,6 +113,55 @@ const HelpDesk = () => {
                     <div className="bg-slate-100 p-4 rounded-md mt-4">
                         <p className="text-sm text-slate-700">
                             <strong>Tip:</strong> When you accept a friend request, you'll immediately be able to see each other's profiles, share events, and transfer tickets.
+                        </p>
+                    </div>
+                </div>
+            ),
+        },
+        {
+            id: "password-unavailable",
+            category: "account",
+            title: "How to reset your password (not logged in)",
+            content: (
+                <div className="space-y-4">
+                    <p>We recommend that you try and look for your invitation in your spam folder, before you reach out to us, and if it is not there, you change your password in the app by following these steps:</p>
+                    <ol className="space-y-2 pl-5 list-decimal">
+                        <li>Open the app and tap on <strong>Need help?</strong> just below the e-mail and password fields</li>
+                        <li>Select <strong>I forgot my password</strong></li>
+                        <li>Enter your<strong>e-mail</strong></li>
+                        <li>Select <strong>Send email</strong></li>
+                        <li>Open your e-mail app</li>
+                        <li>Enter your new password and confirm it once again</li>
+                        <li>Tap <strong>Save</strong> to update your password</li>
+                    </ol>
+                    <div className="bg-slate-100 p-4 rounded-md mt-4">
+                        <p className="text-sm text-slate-700">
+                            <strong>Note:</strong> For security reasons, your new password must be at least 8 characters long and include a combination of letters, numbers, and special characters.
+                        </p>
+                    </div>
+                </div>
+            ),
+        },
+        {
+            id: "claim-club",
+            category: "club",
+            title: "How to get access to a club/page on Happenings as an admin",
+            content: (
+                <div className="space-y-4">
+                    <p>If you are a club admin, you can claim your club by follwing these very simple steps:</p>
+                    <ol className="space-y-2 pl-5 list-decimal">
+                        <li>Open your e-mail, and enter <strong>support@happenings.dk</strong></li>
+                        <li>Add your <strong>club name</strong> in the <strong>subject field</strong></li>
+                        <li>Add your <strong>role in the club</strong></li>
+                        <li>Attach your <strong>phone-number</strong></li>
+                        <li>If your club has a website, it is valid to send a mail from the domain of the club</li>
+                        <li>Attach proof that you are a club admin</li>
+                        <li>Once ready <strong>Send</strong> the e-mail</li>
+                        <li>You will hear back in the blink of an eye</li>
+                    </ol>
+                    <div className="bg-slate-100 p-4 rounded-md mt-4">
+                        <p className="text-sm text-slate-700">
+                            <strong>Note:</strong> Documentation can be anything from a legal document to proof that you currently manage the existing Facebook page or Instagram account. We will ask for further information, if we feel required to.
                         </p>
                     </div>
                 </div>
