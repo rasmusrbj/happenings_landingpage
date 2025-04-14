@@ -224,10 +224,11 @@ const EventLandingPage = ({ eventId }) => {
                         {event.is_open ? "Registration is open" : "Registration is closed"}
                     </span>
                 </div>
-                <div className="flex items-center">
-                    <Users className="h-4 w-4 mr-2" />
-                    <span>{event.participant_count} / {event.max_participants} participants</span>
-                </div>
+
+                {/*<div className="flex items-center">*/}
+                {/*    <Users className="h-4 w-4 mr-2" />*/}
+                {/*    <span>{event.participant_count} / {event.max_participants} participants</span>*/}
+                {/*</div>*/}
             </div>
 
             {/* Main content area */}
@@ -351,19 +352,19 @@ const EventLandingPage = ({ eventId }) => {
                             </div>
 
                             {/* Participants */}
-                            <div className="space-y-2">
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center">
-                                        <Users className="h-5 w-5 text-muted-foreground mr-2" />
-                                        <p className="font-medium">Participants</p>
-                                    </div>
-                                    <p className="text-sm font-medium">{event.participant_count} / {event.max_participants}</p>
-                                </div>
-                                <Progress value={ticketPercentage} className="h-2" />
-                                <p className="text-xs text-muted-foreground text-right">
-                                    {ticketsRemaining} tickets remaining
-                                </p>
-                            </div>
+                            {/*<div className="space-y-2">*/}
+                            {/*    <div className="flex items-center justify-between">*/}
+                            {/*        <div className="flex items-center">*/}
+                            {/*            <Users className="h-5 w-5 text-muted-foreground mr-2" />*/}
+                            {/*            <p className="font-medium">Participants</p>*/}
+                            {/*        </div>*/}
+                            {/*        <p className="text-sm font-medium">{event.participant_count} / {event.max_participants}</p>*/}
+                            {/*    </div>*/}
+                            {/*    <Progress value={ticketPercentage} className="h-2" />*/}
+                            {/*    <p className="text-xs text-muted-foreground text-right">*/}
+                            {/*        {ticketsRemaining} tickets remaining*/}
+                            {/*    </p>*/}
+                            {/*</div>*/}
 
                             <Separator />
 
