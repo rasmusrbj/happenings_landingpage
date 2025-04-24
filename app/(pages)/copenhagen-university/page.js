@@ -3,6 +3,7 @@ import KUFeatures from "@/app/(components)/pages/ku/ku_features";
 import KUHero from "@/app/(components)/pages/ku/ku_hero";
 import KUProduct from "@/app/(components)/pages/ku/ku_product";
 import KUCTA from "@/app/(components)/pages/ku/ku_cta";
+import TrustedLogos from "@/app/(components)/pages/ku/trusted_logos";
 import Footer from "@/app/(components)/universal/navigation/footer/footer";
 
 export const metadata = {
@@ -16,6 +17,7 @@ export default function CopenhagenUniversity() {
       <KUHero />
       <KUProduct />
       <KUBenefits />
+      <TrustedLogos />
       <KUFeatures />
       <KUCTA />
       <Footer />
