@@ -36,6 +36,7 @@ export default function TrustedLogos({ language: initialLanguage }) {
     {
       src: "/jdku.webp",
       alt: "Juridisk Diskussionsklub",
+      href: "/page/jdku",
       width: 60,
       height: 60,
       name: "Juridisk Diskussionsklub",
@@ -44,14 +45,16 @@ export default function TrustedLogos({ language: initialLanguage }) {
     {
       src: "/elsa.webp",
       alt: "ELSA Cph",
+      href: "/page/jdku",
       width: 60,
       height: 60,
-      name: "ELSA",
+      name: "ELSA Cph",
       type: language === "danish" ? "Københavns Universitet" : "University of Copenhagen"
     },
     {
       src: "/sl.webp",
       alt: "StudenterLauget",
+      href: "/page/studenterlauget",
       width: 60,
       height: 60,
       name: "StudenterLauget",
@@ -60,6 +63,7 @@ export default function TrustedLogos({ language: initialLanguage }) {
     {
       src: "/kvindelige.jpg",
       alt: "StudenterLauget",
+      href: "/page/jdku",
       width: 60,
       height: 60,
       name: "Kvindelige Jurister",

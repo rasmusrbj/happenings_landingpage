@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 export default function KUFeatures() {
   const [language, setLanguage] = useState("danish");
-  
+
   // Listen for language changes
   useEffect(() => {
     const handleLanguageChange = (e) => {
@@ -12,14 +12,14 @@ export default function KUFeatures() {
         setLanguage(e.detail);
       }
     };
-    
+
     window.addEventListener("languageChange", handleLanguageChange);
     return () => window.removeEventListener("languageChange", handleLanguageChange);
   }, []);
-  
+
   const content = {
     danish: {
-      heading: "DERFOR VÆLGER FLERE KU-FORENINGER HAPPENINGS",
+      heading: "FORENINGER PÅ KØBENHAVNS UNIVERSITET VÆLGER HAPPENINGS",
       title: "Derfor bruger flere KU-foreninger Happenings",
       features: [
         {
@@ -60,7 +60,7 @@ export default function KUFeatures() {
         },
         {
           name: "Sponsorer og støttemedlemmer",
-          description: "Vil I have støttemedlemmer? Vi hjælper jer med at finde sponsorer og bygge modellen – fx 1.000 kr. pr. støttemedlem.",
+          description: "Vil I have støttemedlemmer? Vi hjælper jer med at finde sponsorer og bygge modellen.",
           icon: (
             <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -120,7 +120,7 @@ export default function KUFeatures() {
         },
         {
           name: "Sponsors and supporting members",
-          description: "Want supporting members? We help you find sponsors and build the model – e.g. 1,000 DKK per supporting member.",
+          description: "Want supporting members? We help you find sponsors and build the model.",
           icon: (
             <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -149,12 +149,12 @@ export default function KUFeatures() {
             {content[language].title}
           </p>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            {language === "danish" 
-              ? "Vi har skabt platformen sammen med studenterdrevne foreninger på KU" 
+            {language === "danish"
+              ? "Vi har skabt platformen sammen med studenterdrevne foreninger på KU"
               : "We've created the platform together with student-run associations at KU"}
           </p>
         </div>
-        
+
         <div className="mx-auto mt-16 max-w-2xl lg:max-w-none">
           <dl className="grid gap-y-10 gap-x-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {content[language].features.map((feature, index) => (
@@ -170,24 +170,24 @@ export default function KUFeatures() {
             ))}
           </dl>
         </div>
-        
+
         <div className="mt-16 flex justify-center">
           <div className="relative rounded-full px-5 py-2 text-sm leading-6 text-gray-600 ring-1 ring-gray-900/10 hover:ring-gray-900/20 transition-all hover:bg-gray-50">
-            {language === "danish" 
-              ? "Se flere foreninger, der bruger Happenings." 
+            {language === "danish"
+              ? "Se flere foreninger, der bruger Happenings."
               : "See more associations using Happenings."}{" "}
             <a href="#" className="font-semibold text-blue-600 group inline-flex items-center">
               <span className="absolute inset-0" aria-hidden="true" />
-              {language === "danish" ? "Læs mere" : "Read more"} 
-              <svg 
-                className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" 
-                viewBox="0 0 20 20" 
+              {language === "danish" ? "Læs mere" : "Read more"}
+              <svg
+                className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1"
+                viewBox="0 0 20 20"
                 fill="currentColor"
               >
-                <path 
-                  fillRule="evenodd" 
-                  d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" 
-                  clipRule="evenodd" 
+                <path
+                  fillRule="evenodd"
+                  d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z"
+                  clipRule="evenodd"
                 />
               </svg>
             </a>
