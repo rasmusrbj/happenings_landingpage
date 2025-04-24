@@ -4,6 +4,7 @@ import KUHero from "@/app/(components)/pages/ku/ku_hero";
 import KUProduct from "@/app/(components)/pages/ku/ku_product";
 import KUCTA from "@/app/(components)/pages/ku/ku_cta";
 import KUComparison from "@/app/(components)/pages/ku/ku_comparison";
+import KUStory from "@/app/(components)/pages/ku/ku_story";
 import TrustedLogos from "@/app/(components)/pages/ku/trusted_logos";
 import Footer from "@/app/(components)/universal/navigation/footer/footer";
 
@@ -19,6 +20,7 @@ export default function CopenhagenUniversity() {
       <KUProduct />
       <KUBenefits />
       <TrustedLogos />
+      <KUStory />
       <KUFeatures />
       <KUComparison />
       <KUCTA />
