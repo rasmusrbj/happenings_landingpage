@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStar } from "@fortawesome/pro-solid-svg-icons";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -51,12 +51,12 @@ const testimonials = [
 
 export default function HomeTestimonials() {
   return (
-      <div className="bg-gray-50 py-16 sm:py-16">
+      <div className="bg-zinc-50 py-16 sm:py-16">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-xl text-center">
-            <p className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl text-gray-900">
+            <p className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl text-zinc-700">
               Create account, connect to school and{" "}
-              <span className="bg-gradient-to-r from-red-500 to-blue-500 inline-block text-transparent bg-clip-text">
+              <span className="bg-gradient-to-r from-zinc-600 to-bronze-500 inline-block text-transparent bg-clip-text">
               join your community.
             </span>
             </p>
@@ -68,30 +68,30 @@ export default function HomeTestimonials() {
                       key={testimonial.author.handle}
                       className="pt-8 sm:inline-block sm:w-full sm:px-4"
                   >
-                    <figure className="rounded-2xl bg-gray-100 p-8 text-sm leading-6 shadow-md outline outline-1 outline-gray-300 hover:transition-transform ease-out hover:transition-scale-110 duration-300">
+                    <figure className="rounded-2xl bg-white p-8 text-sm leading-6 shadow-lg border border-zinc-200 hover:transition-transform ease-out hover:transition-scale-110 duration-300">
                       <p className="sr-only">5 out of 5 stars</p>
-                      <div className="flex gap-x-1 text-amber-500 mb-3">
+                      <div className="flex gap-x-1 text-gold-500 mb-3">
                         <FontAwesomeIcon icon={faStar} className="h-5 w-5 flex-none" />
                         <FontAwesomeIcon icon={faStar} className="h-5 w-5 flex-none" />
                         <FontAwesomeIcon icon={faStar} className="h-5 w-5 flex-none" />
                         <FontAwesomeIcon icon={faStar} className="h-5 w-5 flex-none" />
                         <FontAwesomeIcon icon={faStar} className="h-5 w-5 flex-none" />
                       </div>
-                      <blockquote className="text-gray-900">
+                      <blockquote className="text-zinc-700">
                         <p>{`"${testimonial.body}"`}</p>
                       </blockquote>
                       <figcaption className="mt-6 flex items-center gap-x-4">
-                        <Avatar className="h-10 w-10 rounded-full bg-gray-50">
+                        <Avatar className="h-10 w-10 rounded-full bg-zinc-50">
                           <AvatarImage src={testimonial.author.imageUrl} alt={testimonial.author.name} />
                           <AvatarFallback>{testimonial.author.name.charAt(0)}</AvatarFallback>
                         </Avatar>
                         <div>
                           <div className="flex flex-row gap-1 items-center">
-                            <div className="font-semibold text-gray-900">
+                            <div className="font-semibold text-zinc-700">
                               {testimonial.author.name}
                             </div>
-                            <p className="text-gray-900">·</p>
-                            <Badge className="font-regular text-white text-xs bg-blue-500 rounded-3xl px-2 py-1 hover:bg-blue-600">
+                            <p className="text-zinc-500">·</p>
+                            <Badge className="font-regular text-white text-xs bg-zinc-600 rounded-3xl px-2 py-1 hover:bg-zinc-700">
                               {testimonial.author.role}
                             </Badge>
                           </div>
@@ -99,7 +99,7 @@ export default function HomeTestimonials() {
                               className="hover:underline underline-offset-2"
                               href="https://happenings.dk/page/jdku"
                           >
-                            <div className="text-gray-600">{`@${testimonial.author.handle}`}</div>
+                            <div className="text-zinc-500">{`@${testimonial.author.handle}`}</div>
                           </Link>
                         </div>
                       </figcaption>

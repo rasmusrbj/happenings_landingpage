@@ -1,78 +1,116 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/router';
+import React, { useState, useRef, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 
 // Import Shadcn components
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Separator } from '@/components/ui/separator';
+import { Textarea } from '@/components/ui/textarea';
+import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { CheckCircle, Users, Calendar, Ticket, Shield, Target, CreditCard } from 'lucide-react';
+import { Progress } from '@/components/ui/progress';
+import {
+    CheckCircle,
+    Users,
+    Calendar,
+    Ticket,
+    Shield,
+    Target,
+    Upload,
+    FileText,
+    Building,
+    Mail,
+    Phone,
+    User,
+    Briefcase,
+    MessageSquare,
+    CheckCircle2,
+    Clock,
+    AlertTriangle,
+    X,
+    CreditCard,
+    Megaphone,
+    BarChart3,
+    BadgeCheck
+} from 'lucide-react';
 import NavHeader from "@/app/(components)/universal/navigation/header/nav_bar";
 import PhoneInput from "@/app/(pages)/claim/PhoneInput";
+import PageSelector from "@/app/(pages)/claim/PageSelector";
 import Footer from "@/app/(components)/universal/navigation/footer/footer";
-
-const benefits = [
-    "Completely free, forever",
-    "No strings attached",
-    "Access it anywhere, anytime",
-    "Maximum security and privacy",
-    "Manage events with ease",
-    "Collect payments automatically",
-];
+import NavHeaderDark from "@/app/(components)/universal/navigation/header/nav_bar_dark";
 
 const features = [
     {
-        name: "Safety",
-        description: "Students can only join with a valid student email.",
-        icon: <Shield className="h-8 w-8 text-blue-500" />
+        name: "Get Verified",
+        description: "Show students that your profile is verified",
+        icon: <BadgeCheck className="h-6 w-6 text-zinc-600" />
     },
     {
-        name: "Audiences",
-        description: "Reach students from specific years, studies, levels, etc.",
-        icon: <Target className="h-8 w-8 text-blue-500" />
+        name: "Digital Membership Cards",
+        description: "Make it easy for members to identify themselves and target your posts",
+        icon: <CreditCard className="h-6 w-6 text-zinc-600" />
     },
     {
-        name: "Memberships",
-        description: "Decide how people can join, payment dues, etc.",
-        icon: <Users className="h-8 w-8 text-blue-500" />
+        name: "Sell Tickets with No Fees",
+        description: "Save money and make it easier for members to buy tickets",
+        icon: <Ticket className="h-6 w-6 text-zinc-600" />
     },
     {
-        name: "Engagement",
-        description: "Create albums, polls, posts... to activate your members.",
-        icon: <Users className="h-8 w-8 text-blue-500" />
+        name: "Direct Communication",
+        description: "Reach your audience with important announcements",
+        icon: <Megaphone className="h-6 w-6 text-zinc-600" />
     },
     {
-        name: "Events",
-        description: "Or just, happenings? Create, share, and congregate.",
-        icon: <Calendar className="h-8 w-8 text-blue-500" />
+        name: "Detailed Insights",
+        description: "Access data on visits and interest in your business",
+        icon: <BarChart3 className="h-6 w-6 text-zinc-600" />
     },
     {
-        name: "Tickets",
-        description: "Sell tickets, or just keep track of who's coming. No fees.",
-        icon: <Ticket className="h-8 w-8 text-blue-500" />
-    },
+        name: "Be Present Where Students Are",
+        description: "Reach more potential members on Happenings",
+        icon: <Users className="h-6 w-6 text-zinc-600" />
+    }
 ];
 
-export default function ClaimMyClubPage() {
+function ClaimPageContent() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const fileInputRef = useRef(null);
+
+    // Get page_id from URL params if available
+    const pageIdFromUrl = searchParams.get('page_id') || '';
+
     // Form state
     const [formData, setFormData] = useState({
-        personalName: "",
+        pageId: pageIdFromUrl,
+        position: "",
+        message: "",
         email: "",
-        clubName: "",
-        phoneNumber: ""
+        firstName: "",
+        familyName: "",
+        fullName: "",
+        phone: "",
+        pageName: ""
     });
 
-    // Error state
-    const [errors, setErrors] = useState({});
+    // Page selection state
+    const [selectedPage, setSelectedPage] = useState(null);
 
-    // Success state
+    // File upload state
+    const [uploadedFile, setUploadedFile] = useState(null);
+    const [fileDescription, setFileDescription] = useState("");
+
+    // UI state
+    const [errors, setErrors] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitProgress, setSubmitProgress] = useState(0);
     const [success, setSuccess] = useState(false);
+    const [claimId, setClaimId] = useState(null);
 
     // Handle input changes
     const handleChange = (e) => {
@@ -95,344 +133,703 @@ export default function ClaimMyClubPage() {
     const handlePhoneChange = (value) => {
         setFormData({
             ...formData,
-            phoneNumber: value
+            phone: value
         });
 
-        // Clear error for this field when user types
-        if (errors.phoneNumber) {
+        if (errors.phone) {
             setErrors({
                 ...errors,
-                phoneNumber: null
+                phone: null
             });
         }
     };
 
-    /// Validate form
+    // Handle page selection
+    const handlePageIdChange = (pageId) => {
+        setFormData({
+            ...formData,
+            pageId: pageId
+        });
+
+        if (errors.pageId) {
+            setErrors({
+                ...errors,
+                pageId: null
+            });
+        }
+    };
+
+    const handlePageSelect = (page) => {
+        setSelectedPage(page);
+        if (page) {
+            // Auto-fill page name if selected from search
+            setFormData({
+                ...formData,
+                pageId: page.id,
+                pageName: page.name
+            });
+        } else {
+            setFormData({
+                ...formData,
+                pageName: ""
+            });
+        }
+    };
+
+    // Handle file upload
+    const handleFileUpload = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            // Validate file type and size
+            const allowedTypes = ['application/pdf', 'image/jpeg', 'image/png', 'image/jpg'];
+            const maxSize = 10 * 1024 * 1024; // 10MB
+
+            if (!allowedTypes.includes(file.type)) {
+                setErrors({
+                    ...errors,
+                    file: "Please upload a PDF, JPEG, or PNG file."
+                });
+                return;
+            }
+
+            if (file.size > maxSize) {
+                setErrors({
+                    ...errors,
+                    file: "File size must be less than 10MB."
+                });
+                return;
+            }
+
+            setUploadedFile(file);
+            setErrors({
+                ...errors,
+                file: null
+            });
+        }
+    };
+
+    // Remove uploaded file
+    const removeFile = () => {
+        setUploadedFile(null);
+        setFileDescription("");
+        if (fileInputRef.current) {
+            fileInputRef.current.value = "";
+        }
+    };
+
+    // Validate form
     const validateForm = () => {
         const newErrors = {};
 
-        if (!formData.personalName || formData.personalName.length < 2) {
-            newErrors.personalName = "Name must be at least 2 characters.";
+        if (!formData.pageId || formData.pageId.length < 2) {
+            newErrors.pageId = "Page ID is required (minimum 2 characters).";
+        }
+
+        if (!formData.position || formData.position.length < 2) {
+            newErrors.position = "Position is required (minimum 2 characters).";
         }
 
         if (!formData.email || !/^\S+@\S+\.\S+$/.test(formData.email)) {
             newErrors.email = "Please enter a valid email address.";
         }
 
-        if (!formData.clubName || formData.clubName.length < 2) {
-            newErrors.clubName = "Club name must be at least 2 characters.";
+        if (!formData.firstName || formData.firstName.length < 1) {
+            newErrors.firstName = "First name is required.";
         }
 
-        // Check if phone number contains a country code and at least 5 digits
-        if (!formData.phoneNumber || !/^\+\d{1,4}\s\d{5,}$/.test(formData.phoneNumber)) {
-            newErrors.phoneNumber = "Please enter a valid phone number with country code.";
+        if (!formData.familyName || formData.familyName.length < 1) {
+            newErrors.familyName = "Family name is required.";
+        }
+
+        // Phone validation with country code
+        if (formData.phone && !/^\+\d{1,4}\s\d{5,}$/.test(formData.phone)) {
+            newErrors.phone = "Please enter a valid phone number with country code.";
         }
 
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
 
-    // Form submission handler
+    // Submit claim to API
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (validateForm()) {
-            try {
-                const response = await fetch('/api/submit-form', {
+        if (!validateForm()) {
+            return;
+        }
+
+        setIsSubmitting(true);
+        setSubmitProgress(10);
+
+        try {
+            // Prepare claim data
+            const claimData = {
+                page_id: formData.pageId,
+                position: formData.position,
+                message: formData.message || "",
+                user_info: {
+                    email: formData.email,
+                    first_name: formData.firstName,
+                    family_name: formData.familyName,
+                    full_name: `${formData.firstName} ${formData.familyName}`.trim(),
+                    phone: formData.phone || "",
+                    page_name: formData.pageName || ""
+                }
+            };
+
+            setSubmitProgress(30);
+
+            // If there's a file, use form data, otherwise use JSON
+            let response;
+            if (uploadedFile) {
+                const formDataToSend = new FormData();
+                formDataToSend.append('claim_data', JSON.stringify(claimData));
+                formDataToSend.append('document', uploadedFile);
+                if (fileDescription) {
+                    formDataToSend.append('document_description', fileDescription);
+                }
+
+                response = await fetch('/api/claims', {
+                    method: 'POST',
+                    body: formDataToSend
+                });
+            } else {
+                response = await fetch('/api/claims', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({
-                        ...formData,
-                        recipient: "onboarding@happenings.social"
-                    }),
-                });
-
-                if (response.ok) {
-                    // Show success message
-                    setSuccess(true);
-
-                    // Reset form
-                    setFormData({
-                        personalName: "",
-                        email: "",
-                        clubName: "",
-                        phoneNumber: ""
-                    });
-
-                    // Hide success message after 5 seconds
-                    setTimeout(() => {
-                        setSuccess(false);
-                    }, 5000);
-                } else {
-                    throw new Error('Failed to submit form');
-                }
-            } catch (error) {
-                console.error('Error submitting form:', error);
-                setErrors({
-                    ...errors,
-                    submit: "There was a problem submitting your request. Please try again."
+                    body: JSON.stringify(claimData)
                 });
             }
+
+            setSubmitProgress(70);
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.detail || 'Failed to submit claim');
+            }
+
+            const result = await response.json();
+            setSubmitProgress(100);
+
+            // Success
+            setClaimId(result._id);
+            setSuccess(true);
+
+            // Reset form
+            setFormData({
+                pageId: pageIdFromUrl,
+                position: "",
+                message: "",
+                email: "",
+                firstName: "",
+                familyName: "",
+                fullName: "",
+                phone: "",
+                pageName: ""
+            });
+            setSelectedPage(null);
+            removeFile();
+
+        } catch (error) {
+            console.error('Error submitting claim:', error);
+            setErrors({
+                submit: error.message || "There was a problem submitting your claim. Please try again."
+            });
+            setSubmitProgress(0);
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
+    if (success) {
+        return (
+            <>
+                <NavHeaderDark />
+                <div className="min-h-screen bg-zinc-50">
+                    <div className="container mx-auto px-4 py-16">
+                        <div className="max-w-2xl mx-auto text-center">
+                            <div className="mb-8">
+                                <div className="w-20 h-20 mx-auto mb-6 bg-emerald-100 rounded-full flex items-center justify-center">
+                                    <CheckCircle2 className="h-10 w-10 text-emerald-600" />
+                                </div>
+                                <h1 className="text-3xl font-bold text-zinc-700 mb-4">
+                                    Claim Submitted Successfully!
+                                </h1>
+                                <p className="text-lg text-zinc-600 mb-6">
+                                    Your claim has been received and is now pending review.
+                                </p>
+
+                                {claimId && (
+                                    <Badge variant="outline" className="bg-zinc-100 text-zinc-600 border-zinc-200 px-4 py-2">
+                                        <FileText className="h-4 w-4 mr-2" />
+                                        Claim ID: {claimId}
+                                    </Badge>
+                                )}
+                            </div>
+
+                            <Card className="bg-white border-zinc-200 shadow-sm">
+                                <CardContent className="p-6">
+                                    <h3 className="text-lg font-semibold text-zinc-700 mb-4">What happens next?</h3>
+                                    <div className="space-y-4 text-left">
+                                        <div className="flex items-start gap-3">
+                                            <div className="w-6 h-6 bg-bronze-400 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                <Clock className="h-3 w-3 text-white" />
+                                            </div>
+                                            <div>
+                                                <p className="font-medium text-zinc-700">Review Process</p>
+                                                <p className="text-sm text-zinc-500">We'll review your claim within 24-48 hours</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-start gap-3">
+                                            <div className="w-6 h-6 bg-bronze-400 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                <Mail className="h-3 w-3 text-white" />
+                                            </div>
+                                            <div>
+                                                <p className="font-medium text-zinc-700">Email Confirmation</p>
+                                                <p className="text-sm text-zinc-500">You'll receive an email update at your provided address</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-start gap-3">
+                                            <div className="w-6 h-6 bg-gold-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                                                <CheckCircle2 className="h-3 w-3 text-white" />
+                                            </div>
+                                            <div>
+                                                <p className="font-medium text-zinc-700">Account Setup</p>
+                                                <p className="text-sm text-zinc-500">Once approved, we'll help you set up your page</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            <div className="mt-8 space-y-4">
+                                <Button
+                                    onClick={() => {
+                                        setSuccess(false);
+                                        setClaimId(null);
+                                        setSelectedPage(null);
+                                    }}
+                                    className="bg-zinc-600 hover:bg-zinc-700 text-white"
+                                >
+                                    Submit Another Claim
+                                </Button>
+                                <div>
+                                    <Link href="/" className="text-zinc-500 hover:text-zinc-600 underline">
+                                        Return to Home
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <Footer />
+            </>
+        );
+    }
+
     return (
         <>
-        <NavHeader />
-        <div className="bg-gradient-to-b from-blue-50 to-white min-h-screen">
-            {/* Hero Section with Background Image */}
-            <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-700 opacity-90"></div>
-                <div className="relative py-20 sm:py-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-                    <div className="text-center">
-                        <h1 className="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl mb-6">
-                            Claim Your Club Today
-                        </h1>
-                        <p className="mt-6 text-xl text-blue-100 max-w-3xl mx-auto">
-                            Build your community with Happenings — whether it's a study group, a social club, or an activist circle.
-                        </p>
-                        <div className="mt-10 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-center">
-                            <div className="space-y-4 sm:space-y-0 sm:mx-auto">
-                                <Link href="#request-form" className="flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-blue-700 bg-white hover:bg-blue-50 md:py-4 md:text-lg md:px-10 shadow-lg transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1">
-                                    Get Started Now
-                                </Link>
-                            </div>
+            <NavHeader />
+            <div className="min-h-screen bg-zinc-50">
+                {/* Hero Section */}
+                <div className="relative bg-white">
+                    <div className="container mx-auto px-4 py-16 lg:py-24">
+                        <div className="max-w-4xl mx-auto text-center">
+                            <Badge className="bg-bronze-400 text-white border-0 mb-6">
+                                <Building className="h-4 w-4 mr-2" />
+                                Page Management
+                            </Badge>
+                            <h1 className="text-4xl lg:text-6xl font-bold text-zinc-700 mb-6">
+                                Claim Your Page
+                            </h1>
+                            <p className="text-xl text-zinc-600 max-w-3xl mx-auto leading-relaxed">
+                                Take control of your page on Happenings and manage your community.
+                            </p>
                         </div>
                     </div>
                 </div>
-                <div className="absolute inset-x-0 bottom-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full">
-                        <path fill="#ffffff" fillOpacity="1" d="M0,192L48,197.3C96,203,192,213,288,197.3C384,181,480,139,576,133.3C672,128,768,160,864,186.7C960,213,1056,235,1152,229.3C1248,224,1344,192,1392,176L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-                    </svg>
-                </div>
-            </div>
 
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 -mt-6 relative z-10">
                 {/* Main Content */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                    {/* Features Column - Visual Cards */}
-                    <div className="lg:col-span-7 space-y-8">
-                        <Card className="border-none shadow-lg overflow-hidden">
-                            <CardHeader className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
-                                <CardTitle className="text-2xl">Centralize Your Student Community</CardTitle>
-                                <CardDescription className="text-blue-100">
-                                    Multiple platforms consolidated into one cohesive tool
-                                </CardDescription>
-                            </CardHeader>
-                            <CardContent className="pt-6">
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-                                    {features.map((feature) => (
-                                        <div key={feature.name} className="flex flex-col items-center text-center p-4 rounded-lg hover:bg-blue-50 transition-colors duration-300">
-                                            <div className="mb-4">
+                <div className="container mx-auto px-4 py-12">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 max-w-7xl mx-auto">
+
+                        {/* Features Sidebar */}
+                        <div className="lg:col-span-4 space-y-8">
+                            <Card className="bg-white border-zinc-200 shadow-sm">
+                                <CardHeader>
+                                    <CardTitle className="text-zinc-700 flex items-center gap-2">
+                                        <Shield className="h-5 w-5 text-bronze-400" />
+                                        Why Claim Your Page?
+                                    </CardTitle>
+                                </CardHeader>
+                                <CardContent className="space-y-6">
+                                    {features.map((feature, index) => (
+                                        <div key={index} className="flex gap-4">
+                                            <div className="w-10 h-10 bg-zinc-100 rounded-lg flex items-center justify-center flex-shrink-0">
                                                 {feature.icon}
                                             </div>
-                                            <h3 className="text-lg font-semibold text-gray-900 mb-2">{feature.name}</h3>
-                                            <p className="text-gray-600">{feature.description}</p>
+                                            <div>
+                                                <h3 className="font-semibold text-zinc-700 mb-1">{feature.name}</h3>
+                                                <p className="text-sm text-zinc-500">{feature.description}</p>
+                                            </div>
                                         </div>
                                     ))}
-                                </div>
-                            </CardContent>
-                        </Card>
+                                </CardContent>
+                            </Card>
 
-                        {/* Testimonial */}
-                        <Card className="border-none shadow-lg overflow-hidden bg-gradient-to-br from-indigo-50 to-blue-50">
-                            <CardContent className="p-8">
-                                <div className="relative">
-                                    <svg className="absolute top-0 left-0 h-16 w-16 text-blue-200 transform -translate-x-6 -translate-y-8" fill="currentColor" viewBox="0 0 32 32" aria-hidden="true">
-                                        <path d="M9.352 4C4.456 7.456 1 13.12 1 19.36c0 5.088 3.072 8.064 6.624 8.064 3.36 0 5.856-2.688 5.856-5.856 0-3.168-2.208-5.472-5.088-5.472-.576 0-1.344.096-1.536.192.48-3.264 3.552-7.104 6.624-9.024L9.352 4zm16.512 0c-4.8 3.456-8.256 9.12-8.256 15.36 0 5.088 3.072 8.064 6.624 8.064 3.264 0 5.856-2.688 5.856-5.856 0-3.168-2.304-5.472-5.184-5.472-.576 0-1.248.096-1.44.192.48-3.264 3.456-7.104 6.528-9.024L25.864 4z" />
-                                    </svg>
-                                    <p className="relative text-lg text-gray-600 italic mt-6 ml-4">
-                                        "Happenings transformed how we manage our club. Everything from event planning to member management is now seamless."
-                                    </p>
-                                    <div className="mt-4 ml-4">
-                                        <p className="text-base font-medium text-gray-900">Julie Meyer</p>
-                                        <p className="text-sm text-gray-500">Club Master, Juridisk Diskussionsklub, KU</p>
-                                    </div>
-                                </div>
-                            </CardContent>
-                        </Card>
-                    </div>
-
-                    {/* Form Column */}
-                    <div className="lg:col-span-5">
-                        <Card id="request-form" className="sticky top-8 border-none shadow-xl overflow-hidden">
-                            <CardHeader className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
-                                <CardTitle className="text-2xl">Request Your Club Access</CardTitle>
-                                <CardDescription className="text-blue-100">
-                                    Fill out the form below and we'll help you get started
-                                </CardDescription>
-                            </CardHeader>
-                            <CardContent className="p-6">
-                                {success && (
-                                    <Alert className="mb-6 bg-green-50 text-green-800 border border-green-200 rounded-lg">
-                                        <div className="flex items-center">
-                                            <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
-                                            <AlertDescription>
-                                                Thank you for your submission! We'll contact you soon to get your club onboarded.
-                                            </AlertDescription>
+                            {/* Testimonial */}
+                            <Card className="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 border-0 shadow-lg overflow-hidden">
+                                <CardContent className="p-0">
+                                    <div className="relative p-6 bg-gradient-to-br from-blue-600/5 via-purple-600/5 to-pink-600/5">
+                                        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10" />
+                                        <div className="relative">
+                                            <div className="flex items-center gap-4 mb-4">
+                                                <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                                                    JM
+                                                </div>
+                                                <div>
+                                                    <cite className="text-sm font-semibold text-zinc-700 not-italic">Julie Meyer</cite>
+                                                    <p className="text-xs text-zinc-500">Club Master @ Juridisk Diskussionsklub</p>
+                                                </div>
+                                            </div>
+                                            <blockquote className="text-zinc-700 font-medium leading-relaxed">
+                                                "Claiming our page transformed how we manage our community. Everything is now centralized and professional."
+                                            </blockquote>
                                         </div>
-                                    </Alert>
-                                )}
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </div>
 
-                                {errors.submit && (
-                                    <Alert className="mb-6 bg-red-50 text-red-800 border border-red-200 rounded-lg">
-                                        <div className="flex items-center">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-red-500 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                                            </svg>
-                                            <AlertDescription>
+                        {/* Claim Form */}
+                        <div className="lg:col-span-8">
+                            <Card className="bg-white border-zinc-200 shadow-sm">
+                                <CardHeader className="border-b border-zinc-100">
+                                    <CardTitle className="text-2xl text-zinc-700 flex items-center gap-2">
+                                        <FileText className="h-6 w-6 text-bronze-400" />
+                                        Submit Page Claim
+                                    </CardTitle>
+                                    <CardDescription className="text-zinc-500">
+                                        Fill out the form below to request management access to your page.
+                                    </CardDescription>
+                                </CardHeader>
+
+                                <CardContent className="p-8">
+                                    {errors.submit && (
+                                        <Alert className="mb-6 bg-red-50 border-red-200">
+                                            <AlertTriangle className="h-4 w-4 text-red-600" />
+                                            <AlertDescription className="text-red-700">
                                                 {errors.submit}
                                             </AlertDescription>
+                                        </Alert>
+                                    )}
+
+                                    {isSubmitting && (
+                                        <div className="mb-6">
+                                            <div className="flex items-center justify-between mb-2">
+                                                <span className="text-sm text-zinc-600">Submitting claim...</span>
+                                                <span className="text-sm text-zinc-600">{submitProgress}%</span>
+                                            </div>
+                                            <Progress value={submitProgress} className="h-2" />
                                         </div>
-                                    </Alert>
-                                )}
+                                    )}
 
-                                <form onSubmit={handleSubmit} className="space-y-6">
-                                    <div className="space-y-2">
-                                        <Label htmlFor="personalName" className="text-gray-700 font-medium">Your Name</Label>
-                                        <Input
-                                            id="personalName"
-                                            name="personalName"
-                                            placeholder="John Doe"
-                                            value={formData.personalName}
-                                            onChange={handleChange}
-                                            className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                                        />
-                                        {errors.personalName && (
-                                            <p className="text-sm text-red-500 flex items-center gap-1 mt-1">
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                                                </svg>
-                                                {errors.personalName}
+                                    <form onSubmit={handleSubmit} className="space-y-8">
+                                        {/* Page Information */}
+                                        <div className="space-y-6">
+                                            <h3 className="text-lg font-semibold text-zinc-700 border-b border-zinc-100 pb-2">
+                                                Page Information
+                                            </h3>
+
+                                            <PageSelector
+                                                value={formData.pageId}
+                                                onChange={handlePageIdChange}
+                                                selectedPage={selectedPage}
+                                                onPageSelect={handlePageSelect}
+                                                disabled={isSubmitting}
+                                            />
+                                            {errors.pageId && (
+                                                <p className="text-sm text-red-500 flex items-center gap-1">
+                                                    <AlertTriangle className="h-4 w-4" />
+                                                    {errors.pageId}
+                                                </p>
+                                            )}
+
+                                            <div className="space-y-2">
+                                                <Label htmlFor="position" className="text-zinc-700 font-medium">
+                                                    Your Position <span className="text-red-500">*</span>
+                                                </Label>
+                                                <Input
+                                                    id="position"
+                                                    name="position"
+                                                    placeholder="e.g., President, Manager, Board Member"
+                                                    value={formData.position}
+                                                    onChange={handleChange}
+                                                    className="border-zinc-300 focus:border-bronze-400 focus:ring-bronze-400"
+                                                    disabled={isSubmitting}
+                                                />
+                                                {errors.position && (
+                                                    <p className="text-sm text-red-500 flex items-center gap-1">
+                                                        <AlertTriangle className="h-4 w-4" />
+                                                        {errors.position}
+                                                    </p>
+                                                )}
+                                            </div>
+
+                                            <div className="space-y-2">
+                                                <Label htmlFor="pageName" className="text-zinc-700 font-medium">
+                                                    Page Name
+                                                </Label>
+                                                <Input
+                                                    id="pageName"
+                                                    name="pageName"
+                                                    placeholder="Official page name"
+                                                    value={formData.pageName}
+                                                    onChange={handleChange}
+                                                    className="border-zinc-300 focus:border-bronze-400 focus:ring-bronze-400"
+                                                    disabled={isSubmitting}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {/* Personal Information */}
+                                        <div className="space-y-6">
+                                            <h3 className="text-lg font-semibold text-zinc-700 border-b border-zinc-100 pb-2">
+                                                Contact Information
+                                            </h3>
+
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                <div className="space-y-2">
+                                                    <Label htmlFor="firstName" className="text-zinc-700 font-medium">
+                                                        First Name <span className="text-red-500">*</span>
+                                                    </Label>
+                                                    <Input
+                                                        id="firstName"
+                                                        name="firstName"
+                                                        placeholder="First name"
+                                                        value={formData.firstName}
+                                                        onChange={handleChange}
+                                                        className="border-zinc-300 focus:border-bronze-400 focus:ring-bronze-400"
+                                                        disabled={isSubmitting}
+                                                    />
+                                                    {errors.firstName && (
+                                                        <p className="text-sm text-red-500 flex items-center gap-1">
+                                                            <AlertTriangle className="h-4 w-4" />
+                                                            {errors.firstName}
+                                                        </p>
+                                                    )}
+                                                </div>
+
+                                                <div className="space-y-2">
+                                                    <Label htmlFor="familyName" className="text-zinc-700 font-medium">
+                                                        Family Name <span className="text-red-500">*</span>
+                                                    </Label>
+                                                    <Input
+                                                        id="familyName"
+                                                        name="familyName"
+                                                        placeholder="Last name"
+                                                        value={formData.familyName}
+                                                        onChange={handleChange}
+                                                        className="border-zinc-300 focus:border-bronze-400 focus:ring-bronze-400"
+                                                        disabled={isSubmitting}
+                                                    />
+                                                    {errors.familyName && (
+                                                        <p className="text-sm text-red-500 flex items-center gap-1">
+                                                            <AlertTriangle className="h-4 w-4" />
+                                                            {errors.familyName}
+                                                        </p>
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                            <div className="space-y-2">
+                                                <Label htmlFor="email" className="text-zinc-700 font-medium">
+                                                    Email Address <span className="text-red-500">*</span>
+                                                </Label>
+                                                <Input
+                                                    id="email"
+                                                    name="email"
+                                                    type="email"
+                                                    placeholder="your@email.com"
+                                                    value={formData.email}
+                                                    onChange={handleChange}
+                                                    className="border-zinc-300 focus:border-bronze-400 focus:ring-bronze-400"
+                                                    disabled={isSubmitting}
+                                                />
+                                                <p className="text-xs text-zinc-500 flex items-center gap-1">
+                                                    <Mail className="h-3 w-3" />
+                                                    Updates about your claim will be sent here
+                                                </p>
+                                                {errors.email && (
+                                                    <p className="text-sm text-red-500 flex items-center gap-1">
+                                                        <AlertTriangle className="h-4 w-4" />
+                                                        {errors.email}
+                                                    </p>
+                                                )}
+                                            </div>
+
+                                            <div className="space-y-2">
+                                                <Label htmlFor="phone" className="text-zinc-700 font-medium">
+                                                    Phone Number
+                                                </Label>
+                                                <PhoneInput
+                                                    value={formData.phone}
+                                                    onChange={handlePhoneChange}
+                                                    disabled={isSubmitting}
+                                                />
+                                                <p className="text-xs text-zinc-500 flex items-center gap-1">
+                                                    <Phone className="h-3 w-3" />
+                                                    Optional - for verification if needed
+                                                </p>
+                                                {errors.phone && (
+                                                    <p className="text-sm text-red-500 flex items-center gap-1">
+                                                        <AlertTriangle className="h-4 w-4" />
+                                                        {errors.phone}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </div>
+
+                                        {/* Additional Information */}
+                                        <div className="space-y-6">
+                                            <h3 className="text-lg font-semibold text-zinc-700 border-b border-zinc-100 pb-2">
+                                                Additional Information
+                                            </h3>
+
+                                            <div className="space-y-2">
+                                                <Label htmlFor="message" className="text-zinc-700 font-medium">
+                                                    Message
+                                                </Label>
+                                                <Textarea
+                                                    id="message"
+                                                    name="message"
+                                                    placeholder="Provide context about your role or why you should manage this page..."
+                                                    value={formData.message}
+                                                    onChange={handleChange}
+                                                    className="border-zinc-300 focus:border-bronze-400 focus:ring-bronze-400 min-h-[100px]"
+                                                    disabled={isSubmitting}
+                                                />
+                                                <p className="text-xs text-zinc-500">
+                                                    Optional - additional information to support your claim
+                                                </p>
+                                            </div>
+
+                                            {/* File Upload */}
+                                            <div className="space-y-4">
+                                                <Label className="text-zinc-700 font-medium">
+                                                    Supporting Documents
+                                                </Label>
+
+                                                {!uploadedFile ? (
+                                                    <div
+                                                        className="border-2 border-dashed border-zinc-300 rounded-lg p-6 text-center hover:border-bronze-400 transition-colors cursor-pointer"
+                                                        onClick={() => fileInputRef.current?.click()}
+                                                    >
+                                                        <Upload className="h-8 w-8 text-zinc-400 mx-auto mb-2" />
+                                                        <p className="text-sm text-zinc-600 mb-1">Upload supporting documents</p>
+                                                        <p className="text-xs text-zinc-500">PDF, JPEG, PNG up to 10MB</p>
+                                                        <input
+                                                            ref={fileInputRef}
+                                                            type="file"
+                                                            accept=".pdf,.jpg,.jpeg,.png"
+                                                            onChange={handleFileUpload}
+                                                            className="hidden"
+                                                            disabled={isSubmitting}
+                                                        />
+                                                    </div>
+                                                ) : (
+                                                    <div className="border border-zinc-300 rounded-lg p-4">
+                                                        <div className="flex items-center justify-between mb-2">
+                                                            <div className="flex items-center gap-2">
+                                                                <FileText className="h-5 w-5 text-bronze-400" />
+                                                                <span className="text-sm font-medium text-zinc-700">{uploadedFile.name}</span>
+                                                                <Badge variant="outline" className="bg-zinc-100 text-zinc-600 border-zinc-200">
+                                                                    {(uploadedFile.size / 1024 / 1024).toFixed(1)} MB
+                                                                </Badge>
+                                                            </div>
+                                                            <Button
+                                                                type="button"
+                                                                variant="ghost"
+                                                                size="sm"
+                                                                onClick={removeFile}
+                                                                className="text-zinc-500 hover:text-red-600"
+                                                                disabled={isSubmitting}
+                                                            >
+                                                                <X className="h-4 w-4" />
+                                                            </Button>
+                                                        </div>
+                                                        <Input
+                                                            placeholder="Optional description for this document..."
+                                                            value={fileDescription}
+                                                            onChange={(e) => setFileDescription(e.target.value)}
+                                                            className="text-xs border-zinc-300 focus:border-bronze-400 focus:ring-bronze-400"
+                                                            disabled={isSubmitting}
+                                                        />
+                                                    </div>
+                                                )}
+
+                                                {errors.file && (
+                                                    <p className="text-sm text-red-500 flex items-center gap-1">
+                                                        <AlertTriangle className="h-4 w-4" />
+                                                        {errors.file}
+                                                    </p>
+                                                )}
+
+                                                <p className="text-xs text-zinc-500">
+                                                    Optional: Upload documents that verify your role
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        {/* Submit Button */}
+                                        <div className="pt-6 border-t border-zinc-100">
+                                            <Button
+                                                type="submit"
+                                                disabled={isSubmitting}
+                                                className="w-full bg-zinc-600 hover:bg-zinc-700 text-white font-medium py-3 text-base h-auto"
+                                            >
+                                                {isSubmitting ? (
+                                                    <>
+                                                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                                                        Submitting Claim...
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <FileText className="h-4 w-4 mr-2" />
+                                                        Submit Page Claim
+                                                    </>
+                                                )}
+                                            </Button>
+
+                                            <p className="text-xs text-zinc-500 text-center mt-3">
+                                                By submitting, you confirm the information is accurate and you have authority to manage this page.
                                             </p>
-                                        )}
-                                    </div>
-
-                                    <div className="space-y-2">
-                                        <Label htmlFor="email" className="text-gray-700 font-medium">Email Address</Label>
-                                        <Input
-                                            id="email"
-                                            name="email"
-                                            type="email"
-                                            placeholder="you@example.com"
-                                            value={formData.email}
-                                            onChange={handleChange}
-                                            className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                                        />
-                                        <p className="text-sm text-gray-500 flex items-center gap-1">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                                            </svg>
-                                            We'll never share your email with anyone else
-                                        </p>
-                                        {errors.email && (
-                                            <p className="text-sm text-red-500 flex items-center gap-1 mt-1">
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                                                </svg>
-                                                {errors.email}
-                                            </p>
-                                        )}
-                                    </div>
-
-                                    <div className="space-y-2">
-                                        <Label htmlFor="clubName" className="text-gray-700 font-medium">Club Name</Label>
-                                        <Input
-                                            id="clubName"
-                                            name="clubName"
-                                            placeholder="Photography Club"
-                                            value={formData.clubName}
-                                            onChange={handleChange}
-                                            className="rounded-lg border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                                        />
-                                        {errors.clubName && (
-                                            <p className="text-sm text-red-500 flex items-center gap-1 mt-1">
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                                                </svg>
-                                                {errors.clubName}
-                                            </p>
-                                        )}
-                                    </div>
-
-                                    <div className="space-y-2">
-                                        <Label htmlFor="phoneNumber" className="text-gray-700 font-medium">Phone Number</Label>
-                                        <PhoneInput
-                                            value={formData.phoneNumber}
-                                            onChange={handlePhoneChange}
-                                        />
-                                        <p className="text-sm text-gray-500 flex items-center gap-1">
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                                            </svg>
-                                            For quick communications about your club setup
-                                        </p>
-                                        {errors.phoneNumber && (
-                                            <p className="text-sm text-red-500 flex items-center gap-1 mt-1">
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                                                </svg>
-                                                {errors.phoneNumber}
-                                            </p>
-                                        )}
-                                    </div>
-
-                                    <Button
-                                        type="submit"
-                                        className="w-full rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium py-3 transition-all duration-300 transform hover:-translate-y-1"
-                                        size="lg"
-                                    >
-                                        Claim My Club
-                                    </Button>
-                                </form>
-                            </CardContent>
-                            <CardFooter className="flex flex-col space-y-4 bg-gray-50 p-6">
-                                <div className="flex items-center justify-center space-x-4">
-                                    <div className="flex -space-x-2">
-                                        <img src="/sl.webp" alt="User" className="w-8 h-8 rounded-full border-2 border-white" />
-                                        <img src="/jdku.webp" alt="User" className="w-8 h-8 rounded-full border-2 border-white" />
-                                        <img src="/elsa.webp" alt="User" className="w-8 h-8 rounded-full border-2 border-white" />
-                                    </div>
-                                    <p className="text-sm text-gray-600">Join 500+ club leaders</p>
-                                </div>
-                                <Separator />
-                                <p className="text-sm text-gray-500 text-center">
-                                    By submitting this form, you'll be joining hundreds of student leaders who are building vibrant communities with Happenings.
-                                </p>
-                            </CardFooter>
-                        </Card>
-                    </div>
-                </div>
-            </div>
-
-
-            {/* Footer with Wave */}
-            <div className="relative mt-16">
-                <div className="absolute inset-x-0 top-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" className="w-full">
-                        <path fill="#3b82f6" fillOpacity="0.1" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,224C672,213,768,171,864,149.3C960,128,1056,128,1152,133.3C1248,139,1344,149,1392,154.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
-                    </svg>
-                </div>
-                <div className="relative bg-blue-50 pt-24 pb-12">
-                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                        <div className="text-center">
-                            <h2 className="text-3xl font-bold text-gray-900">Ready to get started?</h2>
-                            <p className="mt-4 text-xl text-gray-600 max-w-2xl mx-auto">
-                                Join the community of student leaders using Happenings to build better club experiences.
-                            </p>
-                            <div className="mt-8">
-                                <Link href="#request-form" className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-blue-600 hover:bg-blue-700">
-                                    Claim your club now
-                                </Link>
-                            </div>
+                                        </div>
+                                    </form>
+                                </CardContent>
+                            </Card>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
             <Footer />
         </>
+    );
+}
+
+export default function ClaimPage() {
+    return (
+        <Suspense fallback={
+            <div className="min-h-screen bg-zinc-50 flex items-center justify-center">
+                <div className="text-center">
+                    <div className="w-8 h-8 border-2 border-zinc-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+                    <p className="text-zinc-600">Loading...</p>
+                </div>
+            </div>
+        }>
+            <ClaimPageContent />
+        </Suspense>
     );
 }

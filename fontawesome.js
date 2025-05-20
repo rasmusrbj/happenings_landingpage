@@ -7,14 +7,30 @@ import {
     faUser,
     faHome,
     faBell,
+    faMapPin,
+    faUsers,
+    faExternalLink,
+    faClock,
+    faStar,
+    faArrowRight,
+    faCheck,
+    faExclamationTriangle,
+    faSpinner,
+    faGlobe,
     // Add more icons as needed
-} from '@fortawesome/pro-solid-svg-icons';
+} from '@fortawesome/free-solid-svg-icons';
 
 import {
     faCalendar,
     faEnvelope,
+    faCalendarCheck,
     // Add more regular icons as needed
 } from '@fortawesome/pro-regular-svg-icons';
+
+import {
+    faInstagram,
+    // Add more brand icons as needed
+} from '@fortawesome/free-brands-svg-icons';
 
 // Prevent Font Awesome from automatically adding CSS to the page
 // since we're handling it manually above
@@ -25,7 +41,18 @@ library.add(
     faUser,
     faHome,
     faBell,
+    faMapPin,
+    faUsers,
+    faExternalLink,
+    faClock,
+    faStar,
+    faArrowRight,
+    faCheck,
+    faExclamationTriangle,
+    faSpinner,
+    faGlobe,
     faCalendar,
-    faEnvelope
-    // Add other icons here as you import them
+    faEnvelope,
+    faCalendarCheck,
+    faInstagram
 );

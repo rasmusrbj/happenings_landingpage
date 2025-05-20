@@ -22,6 +22,25 @@ module.exports = {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
+  			// Custom brand colors following style guide
+  			bronze: {
+  				50: '#faf8f5',
+  				100: '#f4f0e8',
+  				400: '#b08d57',
+  				500: '#cd7f32',
+  			},
+  			silver: {
+  				50: '#f9f9fa',
+  				100: '#f2f3f4',
+  				400: '#a8a9ad',
+  				500: '#c0c0c0',
+  			},
+  			gold: {
+  				50: '#fefdf9',
+  				100: '#fdfaf1',
+  				400: '#e6be8a',
+  				500: '#ffd700',
+  			},
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
